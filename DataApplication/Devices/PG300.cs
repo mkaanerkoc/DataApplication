@@ -1,4 +1,6 @@
-﻿using DataApplication.Peripherals;
+﻿using DataApplication.DataWriter;
+using DataApplication.Peripherals;
+using DataApplication.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +12,10 @@ namespace DataApplication.Devices
 {
     public class PG300 : BaseDevice
     {
-        private static readonly byte[] cmd1 = new byte[] { (byte)'R', (byte)'0', (byte)'1' };
-        private static readonly byte[] cmd2 = new byte[] { (byte)'R', (byte)'0', (byte)'2' };
-        private static readonly byte[] cmd3 = new byte[] { (byte)'R', (byte)'0', (byte)'3' };
+        private static readonly byte[] cmd1 = new byte[] { (byte)'R', (byte)'2', (byte)'0', (byte)'0' };
+        private static readonly byte[] cmd2 = new byte[] { (byte)'R', (byte)'2', (byte)'0', (byte)'1' };
+        private static readonly byte[] cmd3 = new byte[] { (byte)'R', (byte)'2', (byte)'0', (byte)'2' };
 
-        IPeripheralInterface _periphInterface;
 
         public PG300(string portName)
         {
@@ -22,9 +23,13 @@ namespace DataApplication.Devices
             _periphInterface.open();
         }
 
-        public PG300(string portName, IPeripheralInterface interfaceParam)
+        public PG300(   string portName, 
+                        IPeripheralInterface interfaceParam,
+                        IViewUpdater viewParam )
         {
             _periphInterface = interfaceParam;
+            _writer = new CSVWriter(";");
+            _view = viewParam;
             _periphInterface.open();
         }
 
@@ -50,7 +55,12 @@ namespace DataApplication.Devices
 
         public override void ReadDataChannels()
         {
-            throw new NotImplementedException();
+            byte[] outBuffer = new byte[] { };
+            int responseLength = 33;
+            if (_periphInterface.read(cmd1, responseLength, ref outBuffer, 1000 ) == 7)
+            {
+
+            }
         }
 
         public override void ReadDeviceConfigFile()

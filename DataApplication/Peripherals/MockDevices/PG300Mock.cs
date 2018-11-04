@@ -34,13 +34,18 @@ namespace DataApplication.Peripherals.MockDevices
             {
                 return 0;
             }
-            if( cmd[0] == 'R' && cmd[1] == '0' && cmd[2] == '1' )
+            if( cmd[0] == 'R' && cmd[1] == '2' && cmd[2] == '0' && cmd[2] == '1')
             {
+                Random rnd = new Random();
                 // copy data to outbuffer
                 outbuffer[0] = (byte)'C';
                 outbuffer[1] = (byte)'0';
                 outbuffer[2] = (byte)'1';
                 outbuffer[3] = (byte)'1';
+                for( int k = 0; k < 30; k++ )
+                {
+                    outbuffer[k + 3] = (byte)rnd.Next(40, 90);
+                }
             }
             else
             {

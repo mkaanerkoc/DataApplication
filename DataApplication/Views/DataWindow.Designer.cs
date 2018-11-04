@@ -59,19 +59,20 @@
             // unitTb
             // 
             this.unitTb.AutoSize = true;
-            this.unitTb.Location = new System.Drawing.Point(51, 158);
+            this.unitTb.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.unitTb.Location = new System.Drawing.Point(62, 146);
             this.unitTb.Name = "unitTb";
-            this.unitTb.Size = new System.Drawing.Size(18, 17);
+            this.unitTb.Size = new System.Drawing.Size(22, 24);
             this.unitTb.TabIndex = 6;
             this.unitTb.Text = "--";
             // 
             // valueTb
             // 
             this.valueTb.AutoSize = true;
-            this.valueTb.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.valueTb.Location = new System.Drawing.Point(23, 74);
+            this.valueTb.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Italic);
+            this.valueTb.Location = new System.Drawing.Point(49, 71);
             this.valueTb.Name = "valueTb";
-            this.valueTb.Size = new System.Drawing.Size(32, 31);
+            this.valueTb.Size = new System.Drawing.Size(35, 36);
             this.valueTb.TabIndex = 5;
             this.valueTb.Text = "--";
             // 

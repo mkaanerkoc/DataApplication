@@ -56,6 +56,7 @@
     <Compile Include="ApplicationManager\Exceptions.cs" />
     <Compile Include="ApplicationManager\FileErrorHandler.cs" />
     <Compile Include="ApplicationManager\IErrorHandler.cs" />
+    <Compile Include="ApplicationManager\SessionManager.cs" />
     <Compile Include="DataWriter\ChannelData.cs" />
     <Compile Include="DataWriter\CSVWriter.cs" />
     <Compile Include="DataWriter\ExcelWriter.cs" />
@@ -64,11 +65,11 @@
     <Compile Include="DataWriter\StatusData.cs" />
     <Compile Include="DataWriter\WritableBase.cs" />
     <Compile Include="Devices\BaseDevice.cs" />
-    <Compile Include="Devices\DeviceModel.cs" />
+    <Compile Include="Models\DeviceModel.cs" />
     <Compile Include="Devices\PG250.cs" />
     <Compile Include="Devices\PG300.cs" />
     <Compile Include="Dialogs\NewRecordDialog.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Dialogs\NewRecordDialog.Designer.cs">
       <DependentUpon>NewRecordDialog.cs</DependentUpon>
@@ -79,6 +80,8 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\FacilityModel.cs" />
+    <Compile Include="Models\OperatorModel.cs" />
     <Compile Include="Peripherals\IPeripheralInterface.cs" />
     <Compile Include="Peripherals\MockDevices\MockDeviceBase.cs" />
     <Compile Include="Peripherals\MockDevices\PG250Mock.cs" />

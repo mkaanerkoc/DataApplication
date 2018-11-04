@@ -1,4 +1,6 @@
-﻿using DataApplication.Devices;
+﻿using DataApplication.ApplicationManager;
+using DataApplication.Devices;
+using DataApplication.Dialogs;
 using DataApplication.Peripherals;
 using DataApplication.Peripherals.MockDevices;
 using DataApplication.View;
@@ -19,12 +21,19 @@ namespace DataApplication
     public partial class Form1 : Form
     {
         PG250 pg250;
+        SessionManager sm;
+        IViewUpdater vu;
+        IPeripheralInterface sp;
         public Form1()
         {
             InitializeComponent();
-            IPeripheralInterface sp = new PG250Mock();//new SerialPeripheral(9600, Parity.Even, StopBits.None, "COM2");
-            IViewUpdater vu = new FormUpdater(mainContainer);
+            sp = new PG250Mock();//new SerialPeripheral(9600, Parity.Even, StopBits.None, "COM2");
+            vu = new FormUpdater(mainContainer);
+            sm = new SessionManager();
             pg250 = new PG250("COM1", sp, vu);
+            ConfigurationManager cg = new ConfigurationManager();
+            cg.ParseConfigXML();
+            sm.AddDevice(pg250);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -36,6 +45,31 @@ namespace DataApplication
         {
             //IUDPDevice udpDevice = devFactory.createUDPDevice("PG300");
             //label1.Text = udpDevice.GetInformation();
+        }
+
+        private void yeniKayıtCtrlNToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NewRecordDialog newRecDialog = new NewRecordDialog(ConfigurationManager.config);
+            DialogResult dialogResult = newRecDialog.ShowDialog();
+            if( dialogResult == DialogResult.OK )
+            {
+                vu.initialize(newRecDialog.GetActiveChannels());
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if( sm.IsRunning() )
+            {
+                button3.Text = "Başlat";
+                sm.StopTimer();
+            }
+            else
+            {
+                button3.Text = "Bitir";
+                sm.SetReadPeriod(Convert.ToDouble(readPeriodTb.Text));
+                sm.StartTimer();
+            }
         }
     }
 }

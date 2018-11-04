@@ -46,6 +46,11 @@ namespace DataApplication.Peripherals.MockDevices
                 tempBuffer[4] = (byte)(rnd.Next(40, 50));
                 tempBuffer[5] = (byte)(rnd.Next(60, 80));
                 tempBuffer[6] = (byte)(rnd.Next(120, 160));
+                tempBuffer[7] = (byte)(rnd.Next(20, 30));
+                tempBuffer[8] = (byte)(rnd.Next(40, 50));
+                tempBuffer[9] = (byte)(rnd.Next(60, 80));
+                tempBuffer[10] = (byte)(rnd.Next(120, 160));
+                tempBuffer[11] = (byte)(rnd.Next(120, 160));
                 outbuffer = tempBuffer;
                 return size;
             }

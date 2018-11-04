@@ -41,13 +41,15 @@ namespace DataApplication
             this.button3 = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.kayıtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cihazAyarlarıToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.yeniKayıtCtrlNToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.kaydetCtrlNToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.farklıKaydetCtrlShiftSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cihazAyarlarıToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cihazAyarlarıToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.programAyarlarıToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hakkındaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.readPeriodTb = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -92,6 +94,8 @@ namespace DataApplication
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.readPeriodTb);
             this.groupBox1.Controls.Add(this.button3);
             this.groupBox1.Location = new System.Drawing.Point(12, 38);
             this.groupBox1.Name = "groupBox1";
@@ -102,12 +106,13 @@ namespace DataApplication
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(17, 21);
+            this.button3.Location = new System.Drawing.Point(144, 25);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(87, 46);
+            this.button3.Size = new System.Drawing.Size(87, 45);
             this.button3.TabIndex = 0;
             this.button3.Text = "Başlat";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // menuStrip1
             // 
@@ -132,20 +137,12 @@ namespace DataApplication
             this.kayıtToolStripMenuItem.Size = new System.Drawing.Size(54, 24);
             this.kayıtToolStripMenuItem.Text = "Kayıt";
             // 
-            // cihazAyarlarıToolStripMenuItem
-            // 
-            this.cihazAyarlarıToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cihazAyarlarıToolStripMenuItem1,
-            this.programAyarlarıToolStripMenuItem});
-            this.cihazAyarlarıToolStripMenuItem.Name = "cihazAyarlarıToolStripMenuItem";
-            this.cihazAyarlarıToolStripMenuItem.Size = new System.Drawing.Size(68, 24);
-            this.cihazAyarlarıToolStripMenuItem.Text = "Ayarlar";
-            // 
             // yeniKayıtCtrlNToolStripMenuItem
             // 
             this.yeniKayıtCtrlNToolStripMenuItem.Name = "yeniKayıtCtrlNToolStripMenuItem";
             this.yeniKayıtCtrlNToolStripMenuItem.Size = new System.Drawing.Size(253, 26);
             this.yeniKayıtCtrlNToolStripMenuItem.Text = "Yeni Kayıt  Ctrl + N";
+            this.yeniKayıtCtrlNToolStripMenuItem.Click += new System.EventHandler(this.yeniKayıtCtrlNToolStripMenuItem_Click);
             // 
             // kaydetCtrlNToolStripMenuItem
             // 
@@ -158,6 +155,15 @@ namespace DataApplication
             this.farklıKaydetCtrlShiftSToolStripMenuItem.Name = "farklıKaydetCtrlShiftSToolStripMenuItem";
             this.farklıKaydetCtrlShiftSToolStripMenuItem.Size = new System.Drawing.Size(253, 26);
             this.farklıKaydetCtrlShiftSToolStripMenuItem.Text = "Farklı Kaydet Ctrl+Shift+S";
+            // 
+            // cihazAyarlarıToolStripMenuItem
+            // 
+            this.cihazAyarlarıToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cihazAyarlarıToolStripMenuItem1,
+            this.programAyarlarıToolStripMenuItem});
+            this.cihazAyarlarıToolStripMenuItem.Name = "cihazAyarlarıToolStripMenuItem";
+            this.cihazAyarlarıToolStripMenuItem.Size = new System.Drawing.Size(68, 24);
+            this.cihazAyarlarıToolStripMenuItem.Text = "Ayarlar";
             // 
             // cihazAyarlarıToolStripMenuItem1
             // 
@@ -177,6 +183,22 @@ namespace DataApplication
             this.hakkındaToolStripMenuItem.Size = new System.Drawing.Size(83, 24);
             this.hakkındaToolStripMenuItem.Text = "Hakkında";
             // 
+            // readPeriodTb
+            // 
+            this.readPeriodTb.Location = new System.Drawing.Point(11, 48);
+            this.readPeriodTb.Name = "readPeriodTb";
+            this.readPeriodTb.Size = new System.Drawing.Size(127, 22);
+            this.readPeriodTb.TabIndex = 1;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(11, 25);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(113, 17);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Okuma Periyodu";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -192,6 +214,7 @@ namespace DataApplication
             this.Name = "Form1";
             this.Text = "Form1";
             this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -216,6 +239,8 @@ namespace DataApplication
         private ToolStripMenuItem cihazAyarlarıToolStripMenuItem1;
         private ToolStripMenuItem programAyarlarıToolStripMenuItem;
         private ToolStripMenuItem hakkındaToolStripMenuItem;
+        private Label label2;
+        private TextBox readPeriodTb;
     }
 }
 

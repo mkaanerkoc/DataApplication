@@ -17,11 +17,6 @@ namespace DataApplication.Devices
         private static readonly byte[] cmd2 = new byte[] { (byte)'C', (byte)'2', (byte)'3' };
         private static readonly byte[] cmd3 = new byte[] { (byte)'C', (byte)'0', (byte)'3' };
 
-        IPeripheralInterface    _periphInterface;
-        IErrorHandler           _errorHandler;
-        IDataWriter             _writer;
-        IViewUpdater            _view;
-
         public PG250( string portName )
         {
             _periphInterface = new SerialPeripheral( 9600, Parity.Even, StopBits.None, portName);
@@ -52,14 +47,14 @@ namespace DataApplication.Devices
 
         public override void ReadDataChannels()
         {
-            int responseLength = 7;
+            int responseLength = 12;
             byte[] outBuffer = new byte[] { };
-            if(_periphInterface.read(cmd1, responseLength, ref outBuffer, 1000 ) == 7)
+            if(_periphInterface.read(cmd1, responseLength, ref outBuffer, 1000 ) == responseLength)
             {
                 List<WritableBase> list = ParseResponse(outBuffer);
+                _view.update(list);
                 _writer.open("deneme.csv");
                 _writer.write(list);
-                _view.update(list);
                 _writer.close();
             }
             else
@@ -83,12 +78,17 @@ namespace DataApplication.Devices
 
         private List<WritableBase> ParseResponse(byte[] response)
         {
+            //burayi begenmedim hic
             List<WritableBase> list = new List<WritableBase>();
-            list.Add(new ChannelData(Convert.ToDouble(response[3]), "channel6"));
-            list.Add(new ChannelData(Convert.ToDouble(response[4]), "channel2"));
-            list.Add(new ChannelData(Convert.ToDouble(response[5]), "channel3"));
-            list.Add(new ChannelData(Convert.ToDouble(response[6]), "channel4"));
-         
+            list.Add(new ChannelData(Convert.ToDouble(response[3]), "NO"));
+            list.Add(new ChannelData(Convert.ToDouble(response[4]), "NOx"));
+            list.Add(new ChannelData(Convert.ToDouble(response[5]), "Corr. NO"));
+            list.Add(new ChannelData(Convert.ToDouble(response[6]), "Corr. NOx"));
+            list.Add(new ChannelData(Convert.ToDouble(response[7]), "CO"));
+            list.Add(new ChannelData(Convert.ToDouble(response[8]), "CO2"));
+            list.Add(new ChannelData(Convert.ToDouble(response[9]), "O2"));
+            list.Add(new ChannelData(Convert.ToDouble(response[10]), "SO2"));
+            list.Add(new ChannelData(Convert.ToDouble(response[11]), "Corr. SO2"));
             return list;
         }
 
