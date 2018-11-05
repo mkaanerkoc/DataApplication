@@ -38,6 +38,8 @@ namespace DataApplication
             this.button2 = new System.Windows.Forms.Button();
             this.mainContainer = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.readPeriodTb = new System.Windows.Forms.TextBox();
             this.button3 = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.kayıtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,8 +50,8 @@ namespace DataApplication
             this.cihazAyarlarıToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.programAyarlarıToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hakkındaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.readPeriodTb = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.lastReadLbl = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -94,6 +96,8 @@ namespace DataApplication
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.lastReadLbl);
+            this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.readPeriodTb);
             this.groupBox1.Controls.Add(this.button3);
@@ -103,6 +107,22 @@ namespace DataApplication
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Session";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(11, 25);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(113, 17);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Okuma Periyodu";
+            // 
+            // readPeriodTb
+            // 
+            this.readPeriodTb.Location = new System.Drawing.Point(11, 48);
+            this.readPeriodTb.Name = "readPeriodTb";
+            this.readPeriodTb.Size = new System.Drawing.Size(127, 22);
+            this.readPeriodTb.TabIndex = 1;
             // 
             // button3
             // 
@@ -183,21 +203,23 @@ namespace DataApplication
             this.hakkındaToolStripMenuItem.Size = new System.Drawing.Size(83, 24);
             this.hakkındaToolStripMenuItem.Text = "Hakkında";
             // 
-            // readPeriodTb
+            // label3
             // 
-            this.readPeriodTb.Location = new System.Drawing.Point(11, 48);
-            this.readPeriodTb.Name = "readPeriodTb";
-            this.readPeriodTb.Size = new System.Drawing.Size(127, 22);
-            this.readPeriodTb.TabIndex = 1;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(343, 25);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(90, 17);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "Son Okuma :";
             // 
-            // label2
+            // lastReadLbl
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(11, 25);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(113, 17);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Okuma Periyodu";
+            this.lastReadLbl.AutoSize = true;
+            this.lastReadLbl.Location = new System.Drawing.Point(439, 25);
+            this.lastReadLbl.Name = "lastReadLbl";
+            this.lastReadLbl.Size = new System.Drawing.Size(18, 17);
+            this.lastReadLbl.TabIndex = 4;
+            this.lastReadLbl.Text = "--";
             // 
             // Form1
             // 
@@ -241,6 +263,8 @@ namespace DataApplication
         private ToolStripMenuItem hakkındaToolStripMenuItem;
         private Label label2;
         private TextBox readPeriodTb;
+        private Label lastReadLbl;
+        private Label label3;
     }
 }
 

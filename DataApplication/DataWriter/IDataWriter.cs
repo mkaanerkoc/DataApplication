@@ -10,7 +10,7 @@ namespace DataApplication.DataWriter
     {
         int open(string nameParam);
         int close();
-        int write(List<WritableBase> dataList );
-        int write(List<List<WritableBase>> dataList);
+        int write(List<IWritable> dataList );
+        int write(List<List<IWritable>> dataList);
     }
 }

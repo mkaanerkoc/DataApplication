@@ -57,13 +57,13 @@
     <Compile Include="ApplicationManager\FileErrorHandler.cs" />
     <Compile Include="ApplicationManager\IErrorHandler.cs" />
     <Compile Include="ApplicationManager\SessionManager.cs" />
-    <Compile Include="DataWriter\ChannelData.cs" />
     <Compile Include="DataWriter\CSVWriter.cs" />
+    <Compile Include="DataWriter\CSV_Writer.cs" />
     <Compile Include="DataWriter\ExcelWriter.cs" />
     <Compile Include="DataWriter\IDataWriter.cs" />
+    <Compile Include="DataWriter\IWritable.cs" />
     <Compile Include="DataWriter\SQLWriter.cs" />
-    <Compile Include="DataWriter\StatusData.cs" />
-    <Compile Include="DataWriter\WritableBase.cs" />
+    <Compile Include="DataWriter\Writable.cs" />
     <Compile Include="Devices\BaseDevice.cs" />
     <Compile Include="Models\DeviceModel.cs" />
     <Compile Include="Devices\PG250.cs" />

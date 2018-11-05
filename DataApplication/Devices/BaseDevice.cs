@@ -17,9 +17,10 @@ namespace DataApplication.Devices
         protected IViewUpdater _view;
         protected IErrorHandler _errorHandler;
 
-        public abstract void ReadDeviceConfigFile();
-        public abstract void ReadDataChannels();
-        public abstract void ReadChannel(int channelId);
-        public abstract void GetDiagnostics();
+        public abstract int ParseDeviceConfigFile();
+        public abstract int ReadDeviceInformation();
+        public abstract int ReadDataChannels();
+        public abstract int ReadChannel(int channelId);
+        public abstract int GetDiagnostics();
     }
 }

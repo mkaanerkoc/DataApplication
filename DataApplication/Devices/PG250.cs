@@ -35,9 +35,10 @@ namespace DataApplication.Devices
             _view = viewParam;
         }
         
-        public override void ReadDeviceConfigFile()
+        public override int ParseDeviceConfigFile()
         {
             Console.WriteLine("<PG250> ReadDeviceConfigFile \n");
+            return 0;
         }
 
         public String GetInformation()
@@ -45,50 +46,54 @@ namespace DataApplication.Devices
             return "<PG250> printInformation...";
         }
 
-        public override void ReadDataChannels()
+        public override int ReadDataChannels()
         {
             int responseLength = 12;
             byte[] outBuffer = new byte[] { };
             if(_periphInterface.read(cmd1, responseLength, ref outBuffer, 1000 ) == responseLength)
             {
-                List<WritableBase> list = ParseResponse(outBuffer);
+                List<IWritable> list = ParseResponse(outBuffer);
                 _view.update(list);
                 _writer.open("deneme.csv");
                 _writer.write(list);
                 _writer.close();
+                return 1;
             }
             else
             {
                 _errorHandler.handleErrorMessage("Yanit gelmedi...");
+                return -1;
             }
             
         }
 
-        public override void ReadChannel(int channelId)
+        public override int ReadChannel(int channelId)
         {
-            return;
+            return -1;
         }
 
-        public override void GetDiagnostics()
+        public override int GetDiagnostics()
         {
             int responseLength = 13;
             byte[] outBuffer = new byte[] { };
             _periphInterface.read(cmd2, responseLength, ref outBuffer, 1000 );
         }
 
-        private List<WritableBase> ParseResponse(byte[] response)
+        private List<IWritable> ParseResponse(byte[] response)
         {
             //burayi begenmedim hic
-            List<WritableBase> list = new List<WritableBase>();
-            list.Add(new ChannelData(Convert.ToDouble(response[3]), "NO"));
-            list.Add(new ChannelData(Convert.ToDouble(response[4]), "NOx"));
-            list.Add(new ChannelData(Convert.ToDouble(response[5]), "Corr. NO"));
-            list.Add(new ChannelData(Convert.ToDouble(response[6]), "Corr. NOx"));
-            list.Add(new ChannelData(Convert.ToDouble(response[7]), "CO"));
-            list.Add(new ChannelData(Convert.ToDouble(response[8]), "CO2"));
-            list.Add(new ChannelData(Convert.ToDouble(response[9]), "O2"));
-            list.Add(new ChannelData(Convert.ToDouble(response[10]), "SO2"));
-            list.Add(new ChannelData(Convert.ToDouble(response[11]), "Corr. SO2"));
+            List<IWritable> list = new List<IWritable>();
+            DateTime dt = DateTime.Now;
+            list.Add(new Writable<string>(dt.ToShortTimeString(), "DateTime", 9));
+            list.Add(new Writable<double>(Convert.ToDouble(response[3]), "NO",0));
+            list.Add(new Writable<double>(Convert.ToDouble(response[4]), "NOx",1));
+            list.Add(new Writable<double>(Convert.ToDouble(response[5]), "Corr. NO",2));
+            list.Add(new Writable<double>(Convert.ToDouble(response[6]), "Corr. NOx",3));
+            list.Add(new Writable<double>(Convert.ToDouble(response[7]), "CO",4));
+            list.Add(new Writable<double>(Convert.ToDouble(response[8]), "CO2",5));
+            list.Add(new Writable<double>(Convert.ToDouble(response[9]), "O2",6));
+            list.Add(new Writable<double>(Convert.ToDouble(response[10]), "SO2",7));
+            list.Add(new Writable<double>(Convert.ToDouble(response[11]), "Corr. SO2",8));
             return list;
         }
 

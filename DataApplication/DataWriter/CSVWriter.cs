@@ -46,7 +46,7 @@ namespace DataApplication.DataWriter
             return 1;
         }
 
-        public int write( List<WritableBase> dataList )
+        public int write( List<IWritable> dataList )
         {
             _sb.Clear();
             for ( int k = 0; k < dataList.Count; k++)
@@ -61,7 +61,7 @@ namespace DataApplication.DataWriter
             return 1;
         }
 
-        public int write(List<List<WritableBase>> dataList)
+        public int write(List<List<IWritable>> dataList)
         {
             _sb.Clear();
             for(int j = 0; j < dataList.Count; j++ )

@@ -41,12 +41,12 @@ namespace DataApplication.View
             }
             return 1;
         }
-        public int update(List<WritableBase> dataList)
+        public int update(List<IWritable> dataList)
         {
             int retval = 0;
             foreach( var i in dataList )
             {
-                var k = dtList.Where(x => x.Alias.Equals(i.alias)).FirstOrDefault();
+                var k = dtList.Where(x => x.Alias.Equals(i.GetAlias())).FirstOrDefault();
                 if( k != null )
                 {
                     if(k.InvokeRequired)
@@ -64,7 +64,7 @@ namespace DataApplication.View
             return retval;
         }
 
-        public int update(List<List<WritableBase>> dataList)
+        public int update(List<List<IWritable>> dataList)
         {
             throw new NotImplementedException();
         }

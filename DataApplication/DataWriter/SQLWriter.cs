@@ -18,12 +18,12 @@ namespace DataApplication.DataWriter
             throw new NotImplementedException();
         }
 
-        public int write(List<WritableBase> dataList)
+        public int write(List<IWritable> dataList)
         {
             throw new NotImplementedException();
         }
 
-        public int write(List<List<WritableBase>> dataList)
+        public int write(List<List<IWritable>> dataList)
         {
             throw new NotImplementedException();
         }

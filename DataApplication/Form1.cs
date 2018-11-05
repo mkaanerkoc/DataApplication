@@ -30,10 +30,27 @@ namespace DataApplication
             sp = new PG250Mock();//new SerialPeripheral(9600, Parity.Even, StopBits.None, "COM2");
             vu = new FormUpdater(mainContainer);
             sm = new SessionManager();
+            sm.OnTick += SessionManager_Tick;
             pg250 = new PG250("COM1", sp, vu);
             ConfigurationManager cg = new ConfigurationManager();
             cg.ParseConfigXML();
             sm.AddDevice(pg250);
+        }
+
+        private void SessionManager_Tick(object sender, EventArgs e)
+        {
+            OnTickEventArgs ee = (OnTickEventArgs)e;
+            if( lastReadLbl.InvokeRequired)
+            {
+                lastReadLbl.Invoke( new MethodInvoker(()=>
+                {
+                    lastReadLbl.Text = ee.TimeReached.ToString();
+                }));
+            }
+            else
+            {
+                lastReadLbl.Text = ee.TimeReached.ToString();
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)

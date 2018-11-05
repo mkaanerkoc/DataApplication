@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace DataApplication.DataWriter
 {
-    public class StatusData : WritableBase
+    public interface IWritable
     {
-        public override string ToString()
-        {
-            throw new NotImplementedException();
-        }
+        Type Type();
+        int GetUniqueID();
+        string GetAlias();
     }
 }

@@ -16,6 +16,11 @@ namespace DataApplication.ApplicationManager
         private Timer _timer;
         private bool _timerRunning = false;
 
+        /* cagirilacak callback fonksiyonunun yapisi */
+        public delegate void OnTickEventHandler(object sender, OnTickEventArgs e); 
+
+        public event EventHandler OnTick;
+
         public SessionManager()
         {
             _devices = new List<BaseDevice>();
@@ -73,6 +78,23 @@ namespace DataApplication.ApplicationManager
                 BaseDevice bd = _devices[k];
                 bd.ReadDataChannels();
             }
+            OnTickEventArgs ee = new OnTickEventArgs();
+            ee.TimeReached = DateTime.Now;
+            OnTick?.Invoke(this, ee);
         }
+
+        /*protected virtual void OnTick(OnTickEventArgs e)
+        {
+            e.TimeReached = DateTime.Now;
+            
+        }*/
+
+
+    }
+
+    public class OnTickEventArgs : EventArgs
+    {
+        public int Result { get; set; }
+        public DateTime TimeReached { get; set; }
     }
 }
