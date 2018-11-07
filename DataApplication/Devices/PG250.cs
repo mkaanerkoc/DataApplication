@@ -30,7 +30,8 @@ namespace DataApplication.Devices
                         IViewUpdater viewParam )
         {
             _periphInterface = interfaceParam;
-            _writer = new CSVWriter(";");
+            //_writer = new CSVWriter(";");
+            _writer = new ExcelWriter();
             _periphInterface.open();
             _view = viewParam;
         }
@@ -54,10 +55,17 @@ namespace DataApplication.Devices
             {
                 List<IWritable> list = ParseResponse(outBuffer);
                 _view.update(list);
-                _writer.open("deneme.csv");
-                _writer.write(list);
-                _writer.close();
-                return 1;
+                //_writer.open("deneme.csv");
+                if( _writer.open("deneme.xlsx") == 1 )
+                {
+                    _writer.write(list);
+                    _writer.close();
+                    return 1;
+                }
+                else
+                {
+                    return -1;
+                }
             }
             else
             {
@@ -77,6 +85,7 @@ namespace DataApplication.Devices
             int responseLength = 13;
             byte[] outBuffer = new byte[] { };
             _periphInterface.read(cmd2, responseLength, ref outBuffer, 1000 );
+            return 1;
         }
 
         private List<IWritable> ParseResponse(byte[] response)
@@ -84,7 +93,7 @@ namespace DataApplication.Devices
             //burayi begenmedim hic
             List<IWritable> list = new List<IWritable>();
             DateTime dt = DateTime.Now;
-            list.Add(new Writable<string>(dt.ToShortTimeString(), "DateTime", 9));
+            list.Add(new Writable<string>(dt.ToLongTimeString(), "DateTime", 9));
             list.Add(new Writable<double>(Convert.ToDouble(response[3]), "NO",0));
             list.Add(new Writable<double>(Convert.ToDouble(response[4]), "NOx",1));
             list.Add(new Writable<double>(Convert.ToDouble(response[5]), "Corr. NO",2));
@@ -97,6 +106,9 @@ namespace DataApplication.Devices
             return list;
         }
 
-        
+        public override int ReadDeviceInformation()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

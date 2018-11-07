@@ -30,7 +30,7 @@ namespace DataApplication.Devices
 
     public class DeviceModel : ISerializable
     {
-        [XmlAttribute]
+        [XmlAttribute("Name")]
         public string Name { get; set; }
         public DeviceInterface Interface { get; set; }
         public DeviceCmdFrame Frame { get; set; }
@@ -62,7 +62,7 @@ namespace DataApplication.Devices
 
     public class ChannelModel
     {
-        [XmlAttribute]
+        [XmlAttribute("Name")]
         public string name { get; set; }
         [XmlElement("Unit")]
         public string unit { get; set; }

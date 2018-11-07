@@ -33,7 +33,7 @@ namespace DataApplication.Devices
             _periphInterface.open();
         }
 
-        public override void GetDiagnostics()
+        public override int GetDiagnostics()
         {
             throw new NotImplementedException();
         }
@@ -43,17 +43,22 @@ namespace DataApplication.Devices
             return "<PG300> UDP Device ";
         }
 
+        public override int ParseDeviceConfigFile()
+        {
+            throw new NotImplementedException();
+        }
+
         public void PrintInformation()
         {
             throw new NotImplementedException();
         }
 
-        public override void ReadChannel(int channelId)
+        public override int ReadChannel(int channelId)
         {
             throw new NotImplementedException();
         }
 
-        public override void ReadDataChannels()
+        public override int ReadDataChannels()
         {
             byte[] outBuffer = new byte[] { };
             int responseLength = 33;
@@ -61,11 +66,13 @@ namespace DataApplication.Devices
             {
 
             }
+            return 1;
         }
 
-        public override void ReadDeviceConfigFile()
+
+        public override int ReadDeviceInformation()
         {
-            Console.WriteLine("<PG300> ReadDeviceConfigFile");
+            throw new NotImplementedException();
         }
     }
 }

@@ -5,13 +5,14 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace DataApplication.Peripherals
 {
     public class UDPPeripheral : IPeripheralInterface
     {
         private UdpClient client;
+        private Thread thdUDPServer;
         private int _portNum;
         private IErrorHandler _errorHandler;
         private IPEndPoint _ipEndpoint;
@@ -38,6 +39,8 @@ namespace DataApplication.Peripherals
             try
             {
                 client.Connect(_ipEndpoint);
+                thdUDPServer = new Thread(new ThreadStart(udpListenerThread));
+                thdUDPServer.Start();
                 return 1;
             }
             catch(Exception e )
@@ -52,6 +55,7 @@ namespace DataApplication.Peripherals
             try
             {
                 client.Close();
+                thdUDPServer.Abort();
                 return 1;
             }
             catch(Exception e )
@@ -88,13 +92,32 @@ namespace DataApplication.Peripherals
 
         public int write(byte[] param)
         {
-            throw new NotImplementedException();
+            UdpClient udpClient = new UdpClient(_portNum);
+            udpClient.Connect(_ipEndpoint);
+            udpClient.Send(param, param.Length);
+            udpClient.Close();
+            return 1;
         }
 
         public int writeAsync(byte[] param)
         {
             throw new NotImplementedException();
         }
+
+
+        private void udpListenerThread()
+        {
+            IPEndPoint RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, 0);
+            UdpClient udpClient = new UdpClient(_portNum);
+            while (true)
+            {
+                //udpClient.Client.Bind(RemoteIpEndPoint);
+                Byte[] receiveBytes = udpClient.Receive(ref RemoteIpEndPoint);
+                string returnDataStr = Encoding.ASCII.GetString(receiveBytes);
+                Console.WriteLine("Received Data " + returnDataStr);            
+            }
+        }
+
     }
 
 }
