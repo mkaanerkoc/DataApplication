@@ -13,9 +13,11 @@ namespace DataApplication.Devices
 {
     public class PG250 : BaseDevice
     {
-        private static readonly byte[] cmd1 = new byte[] { (byte)'C', (byte)'0', (byte)'1' };
-        private static readonly byte[] cmd2 = new byte[] { (byte)'C', (byte)'2', (byte)'3' };
-        private static readonly byte[] cmd3 = new byte[] { (byte)'C', (byte)'0', (byte)'3' };
+
+        private static readonly byte[] C01_CMD = new byte[] { 67, 48, 49, 53, 67, 13, 10 };
+        private static readonly byte[] C23_CMD = new byte[] { 67, 50, 51, 53, 56, 13, 10 };
+
+        private static char PG250_SPLITTER_CHAR = ',';
 
         public PG250( string portName )
         {
@@ -49,12 +51,12 @@ namespace DataApplication.Devices
 
         public override int ReadDataChannels()
         {
-            int responseLength = 12;
             byte[] outBuffer = new byte[] { };
-            if(_periphInterface.read(cmd1, responseLength, ref outBuffer, 1000 ) == responseLength)
+
+            if( _periphInterface.readUntil( C01_CMD, 10, ref outBuffer, 1000 ) > 5 )
             {
                 List<IWritable> list = ParseResponse(outBuffer);
-                _view.update(list);
+                _view.update( list );
                 //_writer.open("deneme.csv");
                 if( _writer.open("deneme.xlsx") == 1 )
                 {
@@ -72,7 +74,6 @@ namespace DataApplication.Devices
                 _errorHandler.handleErrorMessage("Yanit gelmedi...");
                 return -1;
             }
-            
         }
 
         public override int ReadChannel(int channelId)
@@ -84,7 +85,10 @@ namespace DataApplication.Devices
         {
             int responseLength = 13;
             byte[] outBuffer = new byte[] { };
-            _periphInterface.read(cmd2, responseLength, ref outBuffer, 1000 );
+            if (_periphInterface.read(C23_CMD, responseLength, ref outBuffer, 1000) > 0)
+            {
+
+            }
             return 1;
         }
 
@@ -94,15 +98,22 @@ namespace DataApplication.Devices
             List<IWritable> list = new List<IWritable>();
             DateTime dt = DateTime.Now;
             list.Add(new Writable<string>(dt.ToLongTimeString(), "DateTime", 9));
-            list.Add(new Writable<double>(Convert.ToDouble(response[3]), "NO",0));
-            list.Add(new Writable<double>(Convert.ToDouble(response[4]), "NOx",1));
-            list.Add(new Writable<double>(Convert.ToDouble(response[5]), "Corr. NO",2));
-            list.Add(new Writable<double>(Convert.ToDouble(response[6]), "Corr. NOx",3));
-            list.Add(new Writable<double>(Convert.ToDouble(response[7]), "CO",4));
-            list.Add(new Writable<double>(Convert.ToDouble(response[8]), "CO2",5));
-            list.Add(new Writable<double>(Convert.ToDouble(response[9]), "O2",6));
-            list.Add(new Writable<double>(Convert.ToDouble(response[10]), "SO2",7));
-            list.Add(new Writable<double>(Convert.ToDouble(response[11]), "Corr. SO2",8));
+
+            string receivedStr = Encoding.ASCII.GetString(response);
+            string[] receivedWords = receivedStr.Split(PG250_SPLITTER_CHAR);
+            list.Add(new Writable<string>(dt.ToShortDateString(), "Date", 0));
+            list.Add(new Writable<string>(dt.ToShortTimeString(), "Time", 0));
+            for (int i = 0; i < 9; i++)
+            {
+                string str = receivedWords[i + 2];
+                string Name = PG250Information.dataChannelsByIndexes[i];
+                string Value = "---";
+                if (str[5] != 'C')
+                {
+                    Value = str.Substring(6, 5);
+                }
+                list.Add(new Writable<string>(Value, Name, 0));
+            }
             return list;
         }
 

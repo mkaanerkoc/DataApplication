@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DataApplication.ApplicationManager;
 using DataApplication.Devices;
+using DataApplication.Models;
 
 namespace DataApplication.Dialogs
 {
@@ -20,14 +21,20 @@ namespace DataApplication.Dialogs
         {
             InitializeComponent();
             config = configParam;
-            comboBox1.DataSource = config.devices;
-            comboBox1.DisplayMember = "Name";
+            allDevicesCb.DataSource = config.devices;
+            allDevicesCb.DisplayMember = "DisplayName";
+
+            facilitiesCb.DataSource = config.facilities;
+            facilitiesCb.DisplayMember = "ListDisplay";
+
+            operatorsCb.DataSource = config.operators;
+            operatorsCb.DisplayMember = "Fullname";
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             ListBox tempList = (ListBox)channelsCbList;
-            tempList.DataSource = ((DeviceModel)(comboBox1.SelectedItem)).Channels;
+            tempList.DataSource = ((DeviceModel)(allDevicesCb.SelectedItem)).Channels;
             tempList.DisplayMember = "name";
             for (int i = 0; i < channelsCbList.Items.Count; i++)
             {
@@ -41,10 +48,15 @@ namespace DataApplication.Dialogs
             this.Close();
         }
 
+        public BaseDevice GetActiveDevice()
+        {
+            return null;
+        }
+
         public List<ChannelModel> GetActiveChannels()
         {
             List<ChannelModel> activeChannels = new List<ChannelModel>();
-            List<ChannelModel> listTemp = ((DeviceModel)(comboBox1.SelectedItem)).Channels;
+            List<ChannelModel> listTemp = ((DeviceModel)(allDevicesCb.SelectedItem)).Channels;
             //activeChannels = (List<ChannelModel>) channelsCbList.CheckedItems;
             for (int k = 0; k<channelsCbList.Items.Count;k++)
             {
@@ -54,6 +66,10 @@ namespace DataApplication.Dialogs
                 }
             }
             return activeChannels;
+        }
+        public string GetFileName()
+        {
+            return fileNameTb.Text;
         }
     }
 }

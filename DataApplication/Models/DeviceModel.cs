@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace DataApplication.Devices
@@ -28,36 +24,59 @@ namespace DataApplication.Devices
         MODBUS_TCP_FRAME
     }
 
-    public class DeviceModel : ISerializable
+    public enum DeviceModelEnum
     {
-        [XmlAttribute("Name")]
-        public string Name { get; set; }
+        HORIBA_PG250,
+        HORIBA_PG300
+    }
+
+    public class DeviceModel
+    {
+
+        public string Brand { get; set; }
+        public string Model { get; set; }
         public DeviceInterface Interface { get; set; }
         public DeviceCmdFrame Frame { get; set; }
         public List<ChannelModel> Channels { get; set; }
         
+        public string DisplayName
+        {
+            get
+            {
+                return Brand + "-" + Model;
+            }
+        }
+
         public DeviceModel()
         {
 
         }
 
-        public DeviceModel( string nameParam, 
+        public DeviceModel( string brandParam,
+                            string modelParam, 
                             DeviceInterface interfaceParam, 
                             DeviceCmdFrame frameParam )
         {
             Channels = new List<ChannelModel>();
-            Name = nameParam;
+            Brand = brandParam;
+            Model = modelParam;
             Interface = interfaceParam;
             Frame = frameParam;
         }
 
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        public DeviceModel( string brandParam,
+                            string modelParam,
+                            DeviceInterface interfaceParam,
+                            DeviceCmdFrame frameParam,
+                            List<ChannelModel> channelListParam )
         {
-            info.AddValue("Name", this.Name);
-            info.AddValue("Interface", this.Interface);
-            info.AddValue("FrameType", this.Frame);
-            info.AddValue("Channels", this.Channels);
+            Channels = channelListParam;
+            Brand = brandParam;
+            Model = modelParam;
+            Interface = interfaceParam;
+            Frame = frameParam;
         }
+
     }
 
     public class ChannelModel

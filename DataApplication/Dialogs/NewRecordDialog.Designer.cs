@@ -28,31 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.allDevicesCb = new System.Windows.Forms.ComboBox();
             this.channelsCbList = new System.Windows.Forms.CheckedListBox();
             this.saveBtn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.fileNameTb = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.fileNameTb = new System.Windows.Forms.TextBox();
+            this.operatorsCb = new System.Windows.Forms.ComboBox();
+            this.facilitiesCb = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.comboBox4 = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
-            // comboBox1
+            // allDevicesCb
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(22, 54);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(155, 24);
-            this.comboBox1.TabIndex = 0;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.allDevicesCb.FormattingEnabled = true;
+            this.allDevicesCb.Location = new System.Drawing.Point(22, 54);
+            this.allDevicesCb.Name = "allDevicesCb";
+            this.allDevicesCb.Size = new System.Drawing.Size(155, 24);
+            this.allDevicesCb.TabIndex = 0;
+            this.allDevicesCb.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // channelsCbList
             // 
@@ -94,21 +98,20 @@
             // 
             this.groupBox1.Controls.Add(this.channelsCbList);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.comboBox1);
+            this.groupBox1.Controls.Add(this.allDevicesCb);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(308, 337);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
+            this.groupBox1.Text = "Cihaz Ayarları";
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.fileNameTb);
-            this.groupBox2.Controls.Add(this.comboBox3);
-            this.groupBox2.Controls.Add(this.comboBox2);
+            this.groupBox2.Controls.Add(this.groupBox3);
+            this.groupBox2.Controls.Add(this.operatorsCb);
+            this.groupBox2.Controls.Add(this.facilitiesCb);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Location = new System.Drawing.Point(326, 12);
@@ -116,16 +119,39 @@
             this.groupBox2.Size = new System.Drawing.Size(600, 337);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "groupBox2";
+            this.groupBox2.Text = "Kayıt Bilgileri";
             // 
-            // label3
+            // label5
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(17, 34);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(42, 17);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Tesis";
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(14, 67);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(72, 17);
+            this.label5.TabIndex = 5;
+            this.label5.Text = "Dosya Adı";
+            // 
+            // fileNameTb
+            // 
+            this.fileNameTb.Location = new System.Drawing.Point(120, 64);
+            this.fileNameTb.Name = "fileNameTb";
+            this.fileNameTb.Size = new System.Drawing.Size(220, 22);
+            this.fileNameTb.TabIndex = 4;
+            // 
+            // operatorsCb
+            // 
+            this.operatorsCb.FormattingEnabled = true;
+            this.operatorsCb.Location = new System.Drawing.Point(210, 54);
+            this.operatorsCb.Name = "operatorsCb";
+            this.operatorsCb.Size = new System.Drawing.Size(155, 24);
+            this.operatorsCb.TabIndex = 3;
+            // 
+            // facilitiesCb
+            // 
+            this.facilitiesCb.FormattingEnabled = true;
+            this.facilitiesCb.Location = new System.Drawing.Point(17, 54);
+            this.facilitiesCb.Name = "facilitiesCb";
+            this.facilitiesCb.Size = new System.Drawing.Size(155, 24);
+            this.facilitiesCb.TabIndex = 2;
             // 
             // label4
             // 
@@ -136,37 +162,47 @@
             this.label4.TabIndex = 1;
             this.label4.Text = "Operatör";
             // 
-            // comboBox2
+            // label3
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(17, 54);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(155, 24);
-            this.comboBox2.TabIndex = 2;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(17, 34);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(42, 17);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Tesis";
             // 
-            // comboBox3
+            // groupBox3
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(210, 54);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(155, 24);
-            this.comboBox3.TabIndex = 3;
+            this.groupBox3.Controls.Add(this.comboBox4);
+            this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Controls.Add(this.fileNameTb);
+            this.groupBox3.Controls.Add(this.label5);
+            this.groupBox3.Location = new System.Drawing.Point(17, 116);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(348, 174);
+            this.groupBox3.TabIndex = 6;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Dosya Bilgileri";
             // 
-            // fileNameTb
+            // label6
             // 
-            this.fileNameTb.Location = new System.Drawing.Point(17, 162);
-            this.fileNameTb.Name = "fileNameTb";
-            this.fileNameTb.Size = new System.Drawing.Size(348, 22);
-            this.fileNameTb.TabIndex = 4;
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(14, 31);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(82, 17);
+            this.label6.TabIndex = 8;
+            this.label6.Text = "Dosya Türü";
             // 
-            // label5
+            // comboBox4
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(17, 139);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(72, 17);
-            this.label5.TabIndex = 5;
-            this.label5.Text = "Dosya Adı";
+            this.comboBox4.FormattingEnabled = true;
+            this.comboBox4.Items.AddRange(new object[] {
+            "EXCEL ( .xlsx )",
+            "CSV ( .csv )"});
+            this.comboBox4.Location = new System.Drawing.Point(120, 28);
+            this.comboBox4.Name = "comboBox4";
+            this.comboBox4.Size = new System.Drawing.Size(116, 24);
+            this.comboBox4.TabIndex = 9;
             // 
             // NewRecordDialog
             // 
@@ -181,13 +217,15 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox allDevicesCb;
         private System.Windows.Forms.CheckedListBox channelsCbList;
         private System.Windows.Forms.Button saveBtn;
         private System.Windows.Forms.Label label1;
@@ -196,9 +234,12 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox comboBox3;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox operatorsCb;
+        private System.Windows.Forms.ComboBox facilitiesCb;
         private System.Windows.Forms.TextBox fileNameTb;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox comboBox4;
     }
 }

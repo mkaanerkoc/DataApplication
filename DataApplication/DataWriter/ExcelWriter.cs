@@ -58,7 +58,6 @@ namespace DataApplication.DataWriter
         public int write(List<IWritable> dataList)
         {
             int retvalueTemp = 0;
-            bool sheetDataSectionActive = false;
             if( _doc != null && _workBook != null && _workSheet != null )
             {
                 string originalPartId = _workBook.GetIdOfPart(_workSheet);
@@ -68,10 +67,8 @@ namespace DataApplication.DataWriter
 
                 _reader = OpenXmlReader.Create(_workSheet);
                 _writer = OpenXmlWriter.Create(replacementPart);
-
                 
-                
-                while(_reader.Read())
+                while( _reader.Read() )
                 {
                     if(_reader.ElementType == typeof(Selection))
                     {
@@ -81,14 +78,10 @@ namespace DataApplication.DataWriter
                     {
                         if( _reader.IsStartElement )
                         {
-                            sheetDataSectionActive = true;
                             _writer.WriteStartElement(_reader);
                             continue;
                         }
-                        if (_reader.IsEndElement)
-                        {
-                            sheetDataSectionActive = false;
-                        }
+                       
                         // append section begins 
                         //_writer.WriteStartElement(new SheetData()); // beginning of sheetdata
                         Row row = new Row();
@@ -110,7 +103,6 @@ namespace DataApplication.DataWriter
                             _writer.WriteStartElement(_reader);
                             if (_reader.ElementType == typeof(CellValue))
                             {
-                                //Console.WriteLine(_reader.GetText());
                                 _writer.WriteString(_reader.GetText());
                             }
                         }

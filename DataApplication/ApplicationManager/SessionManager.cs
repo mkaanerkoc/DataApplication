@@ -1,4 +1,5 @@
 ﻿using DataApplication.Devices;
+using DataApplication.Models;
 using DataApplication.Peripherals.MockDevices;
 using System;
 using System.Collections.Generic;
@@ -10,11 +11,12 @@ namespace DataApplication.ApplicationManager
 {
     public class SessionManager
     {
-        private List<BaseDevice> _devices;
-        private BaseDevice _device;
-        private DeviceModel _model;
+        public SessionModel userInfo;
         private Timer _timer;
         private bool _timerRunning = false;
+
+        public List<ChannelModel> selectedChannels { get; set; }
+
 
         /* cagirilacak callback fonksiyonunun yapisi */
         public delegate void OnTickEventHandler(object sender, OnTickEventArgs e); 
@@ -23,14 +25,14 @@ namespace DataApplication.ApplicationManager
 
         public SessionManager()
         {
-            _devices = new List<BaseDevice>();
+            userInfo = new SessionModel();
             _timer = new Timer();
             _timer.Elapsed += _timer_Elapsed;
         }
 
         public SessionManager( double periodParam )
         {
-            _devices = new List<BaseDevice>();
+            userInfo = new SessionModel();
             _timer = new Timer();
             _timer.Interval = periodParam;
             _timer.Elapsed += _timer_Elapsed;
@@ -42,10 +44,7 @@ namespace DataApplication.ApplicationManager
             return _timerRunning;
         }
 
-        public void SetReadPeriod( double periodParam)
-        {
-            _timer.Interval = periodParam;
-        }
+        
 
         public void StartTimer()
         {
@@ -59,12 +58,24 @@ namespace DataApplication.ApplicationManager
             _timerRunning = false;
         }
 
-        public void AddDevice(BaseDevice deviceParam)
+        public void SetDevice(BaseDevice deviceParam)
         {
-            if(!_devices.Contains(deviceParam))
-            {
-                _devices.Add(deviceParam);
-            }
+            userInfo.Device = deviceParam;
+        }
+
+        public void SetReadPeriod(double periodParam)
+        {
+            _timer.Interval = periodParam;
+        }
+
+        public void SetActiveChannels( List<ChannelModel> channelsParam )
+        {
+            userInfo.Channels = channelsParam;
+        }
+
+        public void SetFilename( string filenameParam )
+        {
+            userInfo.Filename = filenameParam;
         }
 
         private void _timer_Elapsed(object sender, ElapsedEventArgs e)
@@ -73,11 +84,9 @@ namespace DataApplication.ApplicationManager
             {
                 _timerRunning = false;
             }
-            for(int k = 0; k < _devices.Count; k++ )
-            {
-                BaseDevice bd = _devices[k];
-                bd.ReadDataChannels();
-            }
+
+            userInfo.Device.ReadDataChannels();
+            
             OnTickEventArgs ee = new OnTickEventArgs();
             ee.TimeReached = DateTime.Now;
             OnTick?.Invoke(this, ee);

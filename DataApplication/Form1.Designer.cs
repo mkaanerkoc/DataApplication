@@ -51,11 +51,12 @@ namespace DataApplication
             this.cihazAyarlarıToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cihazAyarlarıToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.programAyarlarıToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.görünümToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hakkındaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.activeChannelsCbList = new System.Windows.Forms.CheckedListBox();
-            this.görünümToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.eskiKayıttanDevamEtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -149,7 +150,7 @@ namespace DataApplication
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(144, 25);
+            this.button3.Location = new System.Drawing.Point(162, 25);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(87, 45);
             this.button3.TabIndex = 0;
@@ -174,6 +175,7 @@ namespace DataApplication
             // 
             this.kayıtToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.yeniKayıtCtrlNToolStripMenuItem,
+            this.eskiKayıttanDevamEtToolStripMenuItem,
             this.kaydetCtrlNToolStripMenuItem,
             this.farklıKaydetCtrlShiftSToolStripMenuItem});
             this.kayıtToolStripMenuItem.Name = "kayıtToolStripMenuItem";
@@ -222,6 +224,12 @@ namespace DataApplication
             this.programAyarlarıToolStripMenuItem.Size = new System.Drawing.Size(196, 26);
             this.programAyarlarıToolStripMenuItem.Text = "Program Ayarları";
             // 
+            // görünümToolStripMenuItem
+            // 
+            this.görünümToolStripMenuItem.Name = "görünümToolStripMenuItem";
+            this.görünümToolStripMenuItem.Size = new System.Drawing.Size(145, 26);
+            this.görünümToolStripMenuItem.Text = "Görünüm";
+            // 
             // hakkındaToolStripMenuItem
             // 
             this.hakkındaToolStripMenuItem.Name = "hakkındaToolStripMenuItem";
@@ -255,11 +263,11 @@ namespace DataApplication
             this.activeChannelsCbList.Size = new System.Drawing.Size(264, 361);
             this.activeChannelsCbList.TabIndex = 0;
             // 
-            // görünümToolStripMenuItem
+            // eskiKayıttanDevamEtToolStripMenuItem
             // 
-            this.görünümToolStripMenuItem.Name = "görünümToolStripMenuItem";
-            this.görünümToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
-            this.görünümToolStripMenuItem.Text = "Görünüm";
+            this.eskiKayıttanDevamEtToolStripMenuItem.Name = "eskiKayıttanDevamEtToolStripMenuItem";
+            this.eskiKayıttanDevamEtToolStripMenuItem.Size = new System.Drawing.Size(253, 26);
+            this.eskiKayıttanDevamEtToolStripMenuItem.Text = "Eski Kayıttan Devam Et";
             // 
             // Form1
             // 
@@ -312,6 +320,7 @@ namespace DataApplication
         private GroupBox groupBox2;
         private GroupBox groupBox3;
         private CheckedListBox activeChannelsCbList;
+        private ToolStripMenuItem eskiKayıttanDevamEtToolStripMenuItem;
     }
 }
 

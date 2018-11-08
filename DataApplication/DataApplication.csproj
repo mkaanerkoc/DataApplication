@@ -61,6 +61,7 @@
     <Compile Include="ApplicationManager\Exceptions.cs" />
     <Compile Include="ApplicationManager\FileErrorHandler.cs" />
     <Compile Include="ApplicationManager\IErrorHandler.cs" />
+    <Compile Include="ApplicationManager\SessionFactory.cs" />
     <Compile Include="ApplicationManager\SessionManager.cs" />
     <Compile Include="DataWriter\CSVWriter.cs" />
     <Compile Include="DataWriter\CSV_Writer.cs" />
@@ -73,6 +74,10 @@
     <Compile Include="DataWriter\SQLWriter.cs" />
     <Compile Include="DataWriter\Writable.cs" />
     <Compile Include="Devices\BaseDevice.cs" />
+    <Compile Include="StaticInformations\DeviceInformations.cs" />
+    <Compile Include="StaticInformations\PG250Information.cs" />
+    <Compile Include="StaticInformations\PG300Information.cs" />
+    <Compile Include="Models\ConfigurationModel.cs" />
     <Compile Include="Models\DeviceModel.cs" />
     <Compile Include="Devices\PG250.cs" />
     <Compile Include="Devices\PG300.cs" />
@@ -90,6 +95,7 @@
     </Compile>
     <Compile Include="Models\FacilityModel.cs" />
     <Compile Include="Models\OperatorModel.cs" />
+    <Compile Include="Models\SessionModel.cs" />
     <Compile Include="Peripherals\IPeripheralInterface.cs" />
     <Compile Include="Peripherals\MockDevices\MockDeviceBase.cs" />
     <Compile Include="Peripherals\MockDevices\PG250Mock.cs" />

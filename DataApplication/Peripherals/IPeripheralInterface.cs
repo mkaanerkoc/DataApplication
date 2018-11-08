@@ -11,7 +11,7 @@ namespace DataApplication.Peripherals
         int open();
         int close();
         int read(byte endbyte, ref byte[] outbuffer, int timeout = 500);
-        int read( byte[] cmd, byte endbyte, ref byte[] outbuffer, int timeout = 500);
+        int readUntil( byte[] cmd, byte endbyte, ref byte[] outbuffer, int timeout = 500);
         int read( int size, ref byte[] outbuffer, int timeout = 500 );
         int read( byte[] cmd, int size, ref byte[] outbuffer, int timeout = 500 );
         int write( byte[] param );

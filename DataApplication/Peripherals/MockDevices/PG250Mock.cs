@@ -8,6 +8,9 @@ namespace DataApplication.Peripherals.MockDevices
 {
     public class PG250Mock : MockDeviceBase, IPeripheralInterface
     {
+        private string C01Result = "R01, 6,A2500C?????,A2500A   -1,A2500C?????,A2500A   -0,A 500A  0.3,B  20B 0.01,B  25B20.49,A 200A  0.2,A 200A  0.0EB\r\n";
+        private string C23Result = "R23,0,0.4, 52.31B\r\n";
+
         public int close()
         {
             return 1;
@@ -30,40 +33,38 @@ namespace DataApplication.Peripherals.MockDevices
 
         public int read(byte[] cmd, int size, ref byte[] outbuffer, int timeout = 500)
         {
-            byte[] tempBuffer = new byte[size];
-            if (cmd.Length != 3)
+            throw new NotImplementedException();
+        }
+
+        public int readUntil(byte[] cmd, byte endbyte, ref byte[] outbuffer, int timeout = 500)
+        {
+            byte[] tempBuffer = new byte[C01Result.Length];
+            if (cmd.Length != 7)
             {
                 return 0;
             }
             if (cmd[0] == 'C' && cmd[1] == '0' && cmd[2] == '1')
             {
-                Random rnd = new Random();
-                // copy data to outbuffer
-                tempBuffer[0] = (byte)'R';
-                tempBuffer[1] = (byte)'0';
-                tempBuffer[2] = (byte)'1';
-                tempBuffer[3] = (byte)(rnd.Next(20, 30));
-                tempBuffer[4] = (byte)(rnd.Next(40, 50));
-                tempBuffer[5] = (byte)(rnd.Next(60, 80));
-                tempBuffer[6] = (byte)(rnd.Next(120, 160));
-                tempBuffer[7] = (byte)(rnd.Next(20, 30));
-                tempBuffer[8] = (byte)(rnd.Next(40, 50));
-                tempBuffer[9] = (byte)(rnd.Next(60, 80));
-                tempBuffer[10] = (byte)(rnd.Next(120, 160));
-                tempBuffer[11] = (byte)(rnd.Next(120, 160));
+                for (int k = 0; k < C01Result.Length; k++)
+                {
+                    tempBuffer[k] = (byte)C01Result[k];
+                }
                 outbuffer = tempBuffer;
-                return size;
+                return C01Result.Length;
+            }
+            else if (cmd[0] == 'C' && cmd[1] == '2' && cmd[2] == '3')
+            {
+                for (int k = 0; k < C23Result.Length; k++)
+                {
+                    tempBuffer[k] = (byte)C23Result[k];
+                }
+                outbuffer = tempBuffer;
+                return C23Result.Length;
             }
             else
             {
                 return 0;
             }
-            return 1;
-        }
-
-        public int read(byte[] cmd, byte endbyte, ref byte[] outbuffer, int timeout = 500)
-        {
-            throw new NotImplementedException();
         }
 
         public int readAsync(byte[] cmd, ref byte[] outbuffer)

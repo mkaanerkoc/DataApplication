@@ -108,7 +108,7 @@ namespace DataApplication.Peripherals
             }
         }
 
-        public int read(byte[] cmd, byte endbyte, ref byte[] outbuffer, int timeout = 500)
+        public int readUntil(byte[] cmd, byte endbyte, ref byte[] outbuffer, int timeout = 500)
         {
             try
             {

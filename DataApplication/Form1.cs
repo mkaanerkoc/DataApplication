@@ -4,23 +4,14 @@ using DataApplication.Dialogs;
 using DataApplication.Peripherals;
 using DataApplication.Peripherals.MockDevices;
 using DataApplication.View;
-using DataApplication.Views;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO.Ports;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DataApplication
 {
     public partial class Form1 : Form
     {
-        PG250 pg250;
+        BaseDevice activeDevice;
         SessionManager sm;
         IViewUpdater vu;
         IPeripheralInterface sp;
@@ -31,10 +22,10 @@ namespace DataApplication
             vu = new FormUpdater(mainContainer);
             sm = new SessionManager();
             sm.OnTick += SessionManager_Tick;
-            pg250 = new PG250("COM1", sp, vu);
+            activeDevice = new PG250("COM1", sp, vu);
             ConfigurationManager cg = new ConfigurationManager();
             cg.ParseConfigXML();
-            sm.AddDevice(pg250);
+            sm.SetDevice(activeDevice);
         }
 
         private void SessionManager_Tick(object sender, EventArgs e)
@@ -55,7 +46,7 @@ namespace DataApplication
 
         private void button1_Click(object sender, EventArgs e)
         {
-            pg250.ReadDataChannels();
+            activeDevice.ReadDataChannels();
         }
 
         private void button2_Click( object sender, EventArgs e)
@@ -66,11 +57,15 @@ namespace DataApplication
 
         private void yeniKayıtCtrlNToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            NewRecordDialog newRecDialog = new NewRecordDialog(ConfigurationManager.config);
+            NewRecordDialog newRecDialog = new NewRecordDialog( ConfigurationManager.config );
             DialogResult dialogResult = newRecDialog.ShowDialog();
             if( dialogResult == DialogResult.OK )
             {
-                vu.initialize(newRecDialog.GetActiveChannels());
+                // burasi onemli configler, creationlar v.s. burada yapılacak hep
+                //BaseDevice dm = newRecDialog.GetActiveDevice();
+                sm.SetFilename( newRecDialog.GetFileName() );
+                vu.initialize( newRecDialog.GetActiveChannels() );
+                
             }
         }
 

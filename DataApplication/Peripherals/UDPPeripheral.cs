@@ -80,7 +80,7 @@ namespace DataApplication.Peripherals
             throw new NotImplementedException();
         }
 
-        public int read(byte[] cmd, byte endbyte, ref byte[] outbuffer, int timeout = 500)
+        public int readUntil(byte[] cmd, byte endbyte, ref byte[] outbuffer, int timeout = 500)
         {
             throw new NotImplementedException();
         }
