@@ -91,6 +91,18 @@
     <Compile Include="Dialogs\AddNewUserDialog.Designer.cs">
       <DependentUpon>AddNewUserDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\NewRecordUserConfirmationDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\NewRecordUserConfirmationDialog.Designer.cs">
+      <DependentUpon>NewRecordUserConfirmationDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\OldRecordUserConfirmationDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\OldRecordUserConfirmationDialog.Designer.cs">
+      <DependentUpon>OldRecordUserConfirmationDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\ProgramParameters.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -174,6 +186,12 @@
     <EmbeddedResource Include="Dialogs\NewRecordDialog.resx">
       <DependentUpon>NewRecordDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\NewRecordUserConfirmationDialog.resx">
+      <DependentUpon>NewRecordUserConfirmationDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\OldRecordUserConfirmationDialog.resx">
+      <DependentUpon>OldRecordUserConfirmationDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ProgramParameters.resx">
       <DependentUpon>ProgramParameters.cs</DependentUpon>
     </EmbeddedResource>
@@ -214,7 +232,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Security\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -3,9 +3,12 @@ using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataApplication.Devices;
+using DataApplication.Models;
 
 namespace DataApplication.DataWriter
 {
@@ -32,6 +35,11 @@ namespace DataApplication.DataWriter
 
         public int create()
         {
+            if( File.Exists(_fileName) )
+            {
+                return - 1;
+            }
+
             if (_fileName.Length < 3)
             {
                 return -1;
@@ -60,8 +68,8 @@ namespace DataApplication.DataWriter
                 SheetId = 1,
                 Name = "Sheet1"
             };
-            sheets.Append(sheet);
 
+            sheets.Append(sheet);
             workbookpart.Workbook.Save();
 
             // Close the document.
@@ -71,6 +79,44 @@ namespace DataApplication.DataWriter
 
         public int create(string nameParam)
         {
+            if (File.Exists(_fileName))
+            {
+                return -1;
+            }
+
+            if (nameParam.Length < 3)
+            {
+                return -1;
+            }
+
+            // Create a spreadsheet document by supplying the filepath.
+            // By default, AutoSave = true, Editable = true, and Type = xlsx.
+            var spreadsheetDocument = SpreadsheetDocument.Create( nameParam, SpreadsheetDocumentType.Workbook);
+
+            // Add a WorkbookPart to the document.
+            var workbookpart = spreadsheetDocument.AddWorkbookPart();
+            workbookpart.Workbook = new Workbook();
+
+            // Add a WorksheetPart to the WorkbookPart.
+            var worksheetPart = workbookpart.AddNewPart<WorksheetPart>();
+            worksheetPart.Worksheet = new Worksheet(new SheetData());
+
+            // Add Sheets to the Workbook.
+            var sheets = spreadsheetDocument.WorkbookPart.Workbook.AppendChild<Sheets>(new Sheets());
+
+            // Append a new worksheet and associate it with the workbook.
+            var sheet = new Sheet()
+            {
+                Id = spreadsheetDocument.WorkbookPart.
+                GetIdOfPart(worksheetPart),
+                SheetId = 1,
+                Name = "Sheet1"
+            };
+
+            sheets.Append(sheet);
+            workbookpart.Workbook.Save();
+            // Close the document.
+            spreadsheetDocument.Close();
             return 1;
         }
 
@@ -105,6 +151,7 @@ namespace DataApplication.DataWriter
             return retvalueTemp;
 
         }
+
         public int open(string nameParam)
         {
             int retvalueTemp = 0;
@@ -234,31 +281,73 @@ namespace DataApplication.DataWriter
 
                 while (_reader.Read())
                 {
+                    if (_reader.ElementType == typeof(Selection))
+                    {
+                        continue;
+                    }
                     if (_reader.ElementType == typeof(SheetData))
                     {
-                        if (_reader.IsEndElement)
-                            continue;
-                        // append section begins 
-                        _writer.WriteStartElement(new SheetData());
-                        for (int row = 0; row < dataList.Count; row++)
+                        if (_reader.IsStartElement)
                         {
-                            for (int col = 0; col < dataList[row].Count; col++)
-                            {
-
-                            }
+                            _writer.WriteStartElement(_reader);
+                            continue;
                         }
+
+                        // append section begins 
+                        //_writer.WriteStartElement(new SheetData()); // beginning of sheetdata
+                        for( int rowIndex = 0; rowIndex < dataList.Count; rowIndex++ )
+                        {
+                            Row row = new Row();
+                            _writer.WriteStartElement(row); // begining of row 
+                            for (int colIndex = 0; colIndex < dataList.Count; colIndex++)
+                            {
+                                Cell cell = new Cell();
+                                cell.CellValue = new CellValue(dataList[rowIndex][colIndex].ToString());
+                                _writer.WriteElement(cell);
+                            }
+                            _writer.WriteEndElement(); // end of row 
+                        }
+                        _writer.WriteEndElement(); // end of sheetdata
                     }
                     else
                     {
+                        if (_reader.IsStartElement)
+                        {
+                            _writer.WriteStartElement(_reader);
+                            if (_reader.ElementType == typeof(CellValue))
+                            {
+                                _writer.WriteString(_reader.GetText());
+                            }
+                        }
+                        else if (_reader.IsEndElement)
+                        {
+                            _writer.WriteEndElement();
+                        }
+                        else
+                        {
 
+                        }
                     }
                 }
+
+                _writer.Close();
+                _reader.Close();
+
+                Sheet sheet = _workBook.Workbook.Descendants<Sheet>().Where(s => s.Id.Value.Equals(originalPartId)).First();
+                sheet.Id.Value = replacementPartId;
+                _workBook.DeletePart(_workSheet);
+                
             }
             else
             {
                 retvalueTemp = -1;
             }
             return retvalueTemp;
+        }
+
+        public int writerHeader(List<ChannelModel> channels, OperatorModel operatorParam, FacilityModel facilityParam)
+        {
+            throw new NotImplementedException();
         }
     }
 }

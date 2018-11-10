@@ -20,6 +20,7 @@ namespace DataApplication.Factories
                 retVal = new SerialPeripheral( deviceConfigParam.BaudRate,
                                                deviceConfigParam.Parity,
                                                deviceConfigParam.StopBit,
+                                               deviceConfigParam.DataBits,
                                                deviceConfigParam.SerialPort );
             }
 

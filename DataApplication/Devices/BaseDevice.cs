@@ -17,6 +17,8 @@ namespace DataApplication.Devices
         protected IViewUpdater _view;
         protected IErrorHandler _errorHandler;
 
+        protected DeviceModel _model;
+
         public int SetDataWriter( IDataWriter param )
         {
             _writer = param;
@@ -40,6 +42,16 @@ namespace DataApplication.Devices
             return 1;
         }
 
+        public int SetDeviceModel( DeviceModel param )
+        {
+            _model = param;
+            return 1;
+        }
+
+        public DeviceModel GetModel()
+        {
+            return _model;
+        }
         public abstract int Begin();
         public abstract int ParseDeviceConfigFile();
         public abstract int ReadDeviceInformation();

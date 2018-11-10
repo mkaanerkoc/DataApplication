@@ -34,6 +34,11 @@ namespace DataApplication.Views
             StopBitsCb.DisplayMember = "Key";
             StopBitsCb.ValueMember = "Value";
 
+            dataBitsCb.DataSource = new BindingSource(SerialDeviceConfigurationTypes.dataBitOptions, null);
+            dataBitsCb.DisplayMember = "Key";
+            dataBitsCb.ValueMember = "Value";
+
+            
             List<string> ports = SerialPort.GetPortNames().ToList<string>();
             ports.Add("---");
             portNameCb.DataSource = ports.ToList<string>();
@@ -41,6 +46,22 @@ namespace DataApplication.Views
 
         public DeviceConfigModel GetDeviceConfig()
         {
+            try
+            {
+                dcm.SerialPort = (string)portNameCb.SelectedItem;
+                dcm.Parity = (Parity)parityBitsCb.SelectedValue;
+                dcm.StopBit = (StopBits)StopBitsCb.SelectedValue;
+                dcm.BaudRate = (int)baudRateCb.SelectedValue;
+                dcm.DataBits = (int)dataBitsCb.SelectedValue;
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("Lütfen programı tekrar çalıştırınız..");
+            }
+            catch (InvalidCastException)
+            {
+                MessageBox.Show("Lütfen geçerli değerler giriniz...");
+            }
             return dcm;
         }
 
@@ -57,6 +78,7 @@ namespace DataApplication.Views
                 dcm.Parity = (Parity)parityBitsCb.SelectedValue;
                 dcm.StopBit = (StopBits)StopBitsCb.SelectedValue;
                 dcm.BaudRate = (int)baudRateCb.SelectedValue;
+                dcm.DataBits = (int)dataBitsCb.SelectedValue;
             }
             catch(NullReferenceException)
             {

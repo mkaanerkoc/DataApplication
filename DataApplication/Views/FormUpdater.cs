@@ -15,7 +15,7 @@ namespace DataApplication.View
     {
         private List<DataWindow> dtList;
         private Control container;
-        public FormUpdater( GroupBox containerParam )
+        public FormUpdater( Panel containerParam )
         { 
             container = containerParam;
             dtList = new List<DataWindow>();
@@ -41,6 +41,7 @@ namespace DataApplication.View
             }
             return 1;
         }
+
         public int update(List<IWritable> dataList)
         {
             int retval = 0;
@@ -64,10 +65,20 @@ namespace DataApplication.View
             return retval;
         }
 
+
         public int update(List<List<IWritable>> dataList)
         {
             throw new NotImplementedException();
         }
-        
+
+        public int addChannel(ChannelModel newChannel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int removeChannel(ChannelModel oldChannel)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

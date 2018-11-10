@@ -22,6 +22,7 @@ namespace DataApplication.Dialogs
     {
         ConfigurationModel config;
         DeviceConfigModel dcm;
+        BaseDevice currentDevice;
         string fileExtension = "";
 
         public NewRecordDialog( ConfigurationModel configParam)
@@ -47,7 +48,7 @@ namespace DataApplication.Dialogs
 
         public BaseDevice GetActiveDevice()
         {
-            return null;
+            return currentDevice;
         }
 
         public List<ChannelModel> GetActiveChannels()
@@ -81,14 +82,17 @@ namespace DataApplication.Dialogs
                 channelsCbList.SetItemChecked(i, true);
             }
             deviceSettingsContainer.Controls.Clear();
-            if (selectedDevice.Interface == DeviceInterface.SERIAL_INTERFACE)
+
+            if ( selectedDevice.Interface == DeviceInterface.SERIAL_INTERFACE)
             {
                 devConfigMenu = new SerialDeviceConfig( dcm );
+                devConfigMenu.Location = new Point( 5, 20 );
                 deviceSettingsContainer.Controls.Add( devConfigMenu );
             }
-            else if (selectedDevice.Interface == DeviceInterface.UDP_INTERFACE )
+            else if ( selectedDevice.Interface == DeviceInterface.UDP_INTERFACE )
             {
                 devConfigMenu = new UDPDeviceConfig( dcm );
+                devConfigMenu.Location = new Point( 5, 20 );
                 deviceSettingsContainer.Controls.Add( devConfigMenu );
             }
             else if( selectedDevice.Interface == DeviceInterface.TCP_INTERFACE )
@@ -97,16 +101,27 @@ namespace DataApplication.Dialogs
             }
         }
 
+
         private void saveBtn_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.OK;
-            DeviceModel selectedDevice = ((DeviceModel)(allDevicesCb.SelectedItem));
-            DataStorageConfigModel storageModel = (DataStorageConfigModel)fileTypeSelectionCb.SelectedItem;
+            var selectedDevice = ((DeviceModel)(allDevicesCb.SelectedItem));
+            var storageModel = (DataStorageConfigModel)fileTypeSelectionCb.SelectedItem;
+            var configBox = (IDeviceConfigControl)deviceSettingsContainer.Controls[0];
+            var devConfig = configBox.GetDeviceConfig();
+            if( devConfig != null && selectedDevice != null && storageModel != null)
+            {
+                this.DialogResult = DialogResult.OK;
+                currentDevice = DeviceFactory.CreateDevice(selectedDevice);
+                var peripheralInterface = PeripheralFactory.CreatePeripheral(devConfig);
+                var dataWriter = DataWriterFactory.CreateDataWriter(fileNameTb.Text, storageModel.Type);
+                var errorHandler = new FileErrorHandler("application_errors.txt");
 
-            var currentDevice = DeviceFactory.CreateDevice(selectedDevice.Brand, selectedDevice.Model);
-            var peripheralInterface = PeripheralFactory.CreatePeripheral( dcm );
-            var dataWriter = DataWriterFactory.CreateDataWriter(fileNameTb.Text, storageModel.Type);
-            this.Close();
+                currentDevice.SetDataWriter(dataWriter);
+                currentDevice.SetPeripheralInterface(peripheralInterface);
+                currentDevice.SetErrorHandler(errorHandler);
+
+                this.Close();
+            }
         }
 
         private void facilitiesCb_SelectedIndexChanged(object sender, EventArgs e)
@@ -119,9 +134,11 @@ namespace DataApplication.Dialogs
             sb.Append("_");
             sb.Append(facilityModel.City);
             sb.Append("__");
-            sb.Append(dt.ToShortDateString());
-            sb.Append("_");
-            sb.Append(dt.ToShortTimeString());
+            sb.Append(dt.Day);
+            sb.Append("-");
+            sb.Append(dt.Month);
+            sb.Append("-");
+            sb.Append(dt.Year);
             sb.Append(fileExtension);
             fileNameTb.Text = sb.ToString();
         }
@@ -137,9 +154,11 @@ namespace DataApplication.Dialogs
             sb.Append("_");
             sb.Append(facilityModel.City);
             sb.Append("__");
-            sb.Append(dt.ToShortDateString());
-            sb.Append("_");
-            sb.Append(dt.ToShortTimeString());
+            sb.Append(dt.Day);
+            sb.Append("-");
+            sb.Append(dt.Month);
+            sb.Append("-");
+            sb.Append(dt.Year);
             sb.Append(fileExtension);
             fileNameTb.Text = sb.ToString();
         }   

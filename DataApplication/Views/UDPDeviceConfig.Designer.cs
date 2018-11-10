@@ -32,7 +32,6 @@
             this.ipAddrTb = new System.Windows.Forms.TextBox();
             this.portNameTb = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.saveBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -70,27 +69,16 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "Port";
             // 
-            // saveBtn
-            // 
-            this.saveBtn.Location = new System.Drawing.Point(59, 211);
-            this.saveBtn.Name = "saveBtn";
-            this.saveBtn.Size = new System.Drawing.Size(84, 31);
-            this.saveBtn.TabIndex = 4;
-            this.saveBtn.Text = "Kaydet";
-            this.saveBtn.UseVisualStyleBackColor = true;
-            this.saveBtn.Click += new System.EventHandler(this.saveBtn_Click);
-            // 
             // UDPDeviceConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.saveBtn);
             this.Controls.Add(this.portNameTb);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.ipAddrTb);
             this.Controls.Add(this.label1);
             this.Name = "UDPDeviceConfig";
-            this.Size = new System.Drawing.Size(219, 259);
+            this.Size = new System.Drawing.Size(211, 259);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -102,6 +90,5 @@
         private System.Windows.Forms.TextBox ipAddrTb;
         private System.Windows.Forms.TextBox portNameTb;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button saveBtn;
     }
 }

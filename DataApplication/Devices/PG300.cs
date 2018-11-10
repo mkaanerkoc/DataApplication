@@ -43,6 +43,7 @@ namespace DataApplication.Devices
         public override int Begin()
         {
             _periphInterface.open();
+            _writer.create(); // creates the file if it is needed to be created
             return 1;
         }
 

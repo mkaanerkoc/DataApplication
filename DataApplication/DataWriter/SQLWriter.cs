@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataApplication.Devices;
+using DataApplication.Models;
 
 namespace DataApplication.DataWriter
 {
@@ -40,6 +42,11 @@ namespace DataApplication.DataWriter
         }
 
         public int write(List<List<IWritable>> dataList)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int writerHeader(List<ChannelModel> channels, OperatorModel operatorParam, FacilityModel facilityParam)
         {
             throw new NotImplementedException();
         }

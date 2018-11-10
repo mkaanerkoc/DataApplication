@@ -13,27 +13,29 @@ namespace DataApplication.Factories
 {
     public class DeviceFactory
     {
-        public static BaseDevice CreateDevice(string brandName, string modelName)
+        public static BaseDevice CreateDevice( DeviceModel modelParam)
         {
             BaseDevice retVal;
-            if( brandName.ToLower().Equals("horiba"))
+            if(modelParam.Brand.ToLower().Equals("horiba"))
             {
-                if(modelName.ToLower().Equals("pg250"))
+                if(modelParam.Model.ToLower().Equals("pg250"))
                 {
                     retVal = new PG250();
+                    retVal.SetDeviceModel( modelParam );
                 }
-                else if ( modelName.ToLower().Equals("pg300"))
+                else if ( modelParam.Model.ToLower().Equals("pg300"))
                 {
                     retVal = new PG300();
+                    retVal.SetDeviceModel(modelParam);
                 }
                 else
                 {
-                    throw new NotImplementedException("Unkknown Model name "+ modelName + " for "+ brandName );
+                    throw new NotImplementedException("Unkknown Model name "+ modelParam.Model + " for "+ modelParam.Brand);
                 }
             }
             else
             {
-                throw new NotImplementedException("Unkknown Brand name " + brandName );
+                throw new NotImplementedException("Unkknown Brand name " + modelParam.Brand);
             }
             
             return retVal;

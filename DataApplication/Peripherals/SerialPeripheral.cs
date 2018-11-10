@@ -14,23 +14,25 @@ namespace DataApplication.Peripherals
         private SerialPort _port;
         private IErrorHandler _errorHandler;
 
-        public SerialPeripheral( int baudRate, Parity parityBits, StopBits stopBits, string portName )
+        public SerialPeripheral( int baudRate, Parity parityBits, StopBits stopBits, int dataBits, string portName )
         {
             _port = new SerialPort();
             _errorHandler = new ConsoleErrorHandler();
             _port.BaudRate = baudRate;
             _port.Parity = parityBits;
             _port.StopBits = stopBits;
+            _port.DataBits = dataBits;
             _port.PortName = portName;
         }
 
-        public SerialPeripheral(int baudRate, Parity parityBits, StopBits stopBits, string portName, IErrorHandler errHandler )
+        public SerialPeripheral(int baudRate, Parity parityBits, StopBits stopBits, int dataBits, string portName, IErrorHandler errHandler )
         {
             _port = new SerialPort();
             _errorHandler = errHandler;
             _port.BaudRate = baudRate;
             _port.Parity = parityBits;
             _port.StopBits = stopBits;
+            _port.DataBits = dataBits;
             _port.PortName = portName;
         }
 

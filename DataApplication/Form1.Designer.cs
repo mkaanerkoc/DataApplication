@@ -34,10 +34,14 @@ namespace DataApplication
         private void InitializeComponent()
         {
             this.button1 = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.mainContainer = new System.Windows.Forms.GroupBox();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lastSaveLbl = new System.Windows.Forms.Label();
+            this.fileNameLbl = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.lastReadLbl = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -58,18 +62,17 @@ namespace DataApplication
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.activeChannelsCbList = new System.Windows.Forms.CheckedListBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.fileNameLbl = new System.Windows.Forms.Label();
-            this.lastSaveLbl = new System.Windows.Forms.Label();
+            this.activeDeviceNameLbl = new System.Windows.Forms.Label();
+            this.mainContainer.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(368, 546);
+            this.button1.Location = new System.Drawing.Point(787, 546);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(133, 55);
             this.button1.TabIndex = 0;
@@ -77,18 +80,9 @@ namespace DataApplication
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(81, 584);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(46, 17);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "label1";
-            // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(507, 546);
+            this.button2.Location = new System.Drawing.Point(926, 546);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(133, 55);
             this.button2.TabIndex = 2;
@@ -98,12 +92,21 @@ namespace DataApplication
             // 
             // mainContainer
             // 
+            this.mainContainer.Controls.Add(this.panel1);
             this.mainContainer.Location = new System.Drawing.Point(12, 128);
             this.mainContainer.Name = "mainContainer";
-            this.mainContainer.Size = new System.Drawing.Size(769, 412);
+            this.mainContainer.Size = new System.Drawing.Size(769, 473);
             this.mainContainer.TabIndex = 3;
             this.mainContainer.TabStop = false;
             this.mainContainer.Text = "Graph";
+            // 
+            // panel1
+            // 
+            this.panel1.AutoScroll = true;
+            this.panel1.Location = new System.Drawing.Point(7, 22);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(756, 445);
+            this.panel1.TabIndex = 0;
             // 
             // groupBox1
             // 
@@ -122,6 +125,42 @@ namespace DataApplication
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Session";
+            // 
+            // lastSaveLbl
+            // 
+            this.lastSaveLbl.AutoSize = true;
+            this.lastSaveLbl.Location = new System.Drawing.Point(458, 42);
+            this.lastSaveLbl.Name = "lastSaveLbl";
+            this.lastSaveLbl.Size = new System.Drawing.Size(23, 17);
+            this.lastSaveLbl.TabIndex = 8;
+            this.lastSaveLbl.Text = "---";
+            // 
+            // fileNameLbl
+            // 
+            this.fileNameLbl.AutoSize = true;
+            this.fileNameLbl.Location = new System.Drawing.Point(428, 18);
+            this.fileNameLbl.Name = "fileNameLbl";
+            this.fileNameLbl.Size = new System.Drawing.Size(23, 17);
+            this.fileNameLbl.TabIndex = 7;
+            this.fileNameLbl.Text = "---";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(343, 42);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(108, 17);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "Son Kaydetme :";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(342, 18);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(80, 17);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "Dosya Adı :";
             // 
             // lastReadLbl
             // 
@@ -169,6 +208,7 @@ namespace DataApplication
             // 
             // menuStrip1
             // 
+            this.menuStrip1.BackColor = System.Drawing.Color.White;
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.kayıtToolStripMenuItem,
@@ -203,6 +243,7 @@ namespace DataApplication
             this.eskiKayıttanDevamEtToolStripMenuItem.Name = "eskiKayıttanDevamEtToolStripMenuItem";
             this.eskiKayıttanDevamEtToolStripMenuItem.Size = new System.Drawing.Size(253, 26);
             this.eskiKayıttanDevamEtToolStripMenuItem.Text = "Eski Kayıttan Devam Et";
+            this.eskiKayıttanDevamEtToolStripMenuItem.Click += new System.EventHandler(this.eskiKayıttanDevamEtToolStripMenuItem_Click);
             // 
             // kaydetCtrlNToolStripMenuItem
             // 
@@ -261,6 +302,7 @@ namespace DataApplication
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.activeDeviceNameLbl);
             this.groupBox2.Location = new System.Drawing.Point(787, 31);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(276, 91);
@@ -286,62 +328,38 @@ namespace DataApplication
             this.activeChannelsCbList.Size = new System.Drawing.Size(264, 361);
             this.activeChannelsCbList.TabIndex = 0;
             // 
-            // label4
+            // activeDeviceNameLbl
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(342, 18);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(80, 17);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "Dosya Adı :";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(343, 42);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(108, 17);
-            this.label5.TabIndex = 6;
-            this.label5.Text = "Son Kaydetme :";
-            // 
-            // fileNameLbl
-            // 
-            this.fileNameLbl.AutoSize = true;
-            this.fileNameLbl.Location = new System.Drawing.Point(428, 18);
-            this.fileNameLbl.Name = "fileNameLbl";
-            this.fileNameLbl.Size = new System.Drawing.Size(23, 17);
-            this.fileNameLbl.TabIndex = 7;
-            this.fileNameLbl.Text = "---";
-            // 
-            // lastSaveLbl
-            // 
-            this.lastSaveLbl.AutoSize = true;
-            this.lastSaveLbl.Location = new System.Drawing.Point(458, 42);
-            this.lastSaveLbl.Name = "lastSaveLbl";
-            this.lastSaveLbl.Size = new System.Drawing.Size(23, 17);
-            this.lastSaveLbl.TabIndex = 8;
-            this.lastSaveLbl.Text = "---";
+            this.activeDeviceNameLbl.AutoSize = true;
+            this.activeDeviceNameLbl.Location = new System.Drawing.Point(24, 25);
+            this.activeDeviceNameLbl.Name = "activeDeviceNameLbl";
+            this.activeDeviceNameLbl.Size = new System.Drawing.Size(18, 17);
+            this.activeDeviceNameLbl.TabIndex = 0;
+            this.activeDeviceNameLbl.Text = "--";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.DarkGray;
             this.ClientSize = new System.Drawing.Size(1075, 613);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.mainContainer);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Form1";
+            this.mainContainer.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -351,7 +369,6 @@ namespace DataApplication
         #endregion
 
         private Button button1;
-        private Label label1;
         private Button button2;
         private GroupBox mainContainer;
         private GroupBox groupBox1;
@@ -379,6 +396,8 @@ namespace DataApplication
         private Label label4;
         private Label fileNameLbl;
         private Label lastSaveLbl;
+        private Panel panel1;
+        private Label activeDeviceNameLbl;
     }
 }
 

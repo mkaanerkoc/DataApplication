@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataApplication.Devices;
+using DataApplication.Models;
 
 namespace DataApplication.DataWriter
 {
@@ -36,12 +38,22 @@ namespace DataApplication.DataWriter
 
         public int create()
         {
-            throw new NotImplementedException();
+            if (File.Exists(_fileName))
+            {
+                return -1;
+            }
+            File.Create(_fileName);
+            return 1;
         }
 
         public int create(string nameParam)
         {
-            throw new NotImplementedException();
+            if (File.Exists(nameParam))
+            {
+                return -1;
+            }
+            File.Create(nameParam);
+            return 1;
         }
 
         public int open( string nameParam)
@@ -114,6 +126,11 @@ namespace DataApplication.DataWriter
                 _sb.Append(Environment.NewLine);
             }
             _writer.Write(_sb.ToString());
+            return 1;
+        }
+
+        public int writerHeader(List<ChannelModel> channels, OperatorModel operatorParam, FacilityModel facilityParam)
+        {
             return 1;
         }
     }

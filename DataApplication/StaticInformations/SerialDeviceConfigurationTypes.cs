@@ -13,7 +13,7 @@ namespace DataApplication.StaticInformations
         public static ReadOnlyDictionary<string, int> baudRateOptions = new ReadOnlyDictionary<string, int>(
             new Dictionary<string, int>()
             {
-                {"4800",4800 },
+                {"4800", 4800 },
                 {"9600", 9600 },
                 {"19200",19200 },
                 {"38400",38400 }
@@ -21,7 +21,6 @@ namespace DataApplication.StaticInformations
         public static ReadOnlyDictionary<string, StopBits> stopBitOptions = new ReadOnlyDictionary<string, StopBits>(
             new Dictionary<string, StopBits>()
             {
-                {"None",StopBits.None },
                 {"1", StopBits.One },
                 {"1.5",StopBits.OnePointFive },
                 {"2",StopBits.Two }
@@ -35,5 +34,13 @@ namespace DataApplication.StaticInformations
                 {"Odd",Parity.Odd },
                 {"Space",Parity.Space }
             });
+        public static ReadOnlyDictionary<string, int> dataBitOptions = new ReadOnlyDictionary<string, int>(
+           new Dictionary<string, int>()
+           {
+                {"5", 5 },
+                {"6", 6 },
+                {"7", 7 },
+                {"8", 8 },
+           });
     }
 }

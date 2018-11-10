@@ -25,7 +25,17 @@ namespace DataApplication.Views
 
         public DeviceConfigModel GetDeviceConfig()
         {
-            return dcm;
+            try
+            {
+                dcm.IPAdress = IPAddress.Parse(ipAddrTb.Text);
+                dcm.Port = Convert.ToInt32(portNameTb.Text);
+                return dcm;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Hatalı giriş yaptınız lütfen tekrar deneyiniz...");
+                return null;
+            }
         }
 
         public void SetDeviceConfig(DeviceConfigModel dcmParam)

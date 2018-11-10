@@ -11,7 +11,9 @@ namespace DataApplication.View
     public interface IViewUpdater
     {
         int initialize(List<ChannelModel> channelList);
+        int addChannel(ChannelModel newChannel);
+        int removeChannel(ChannelModel oldChannel);
         int update(List<IWritable> dataList);
-        int update(List<List<IWritable>> dataList);
+        // buna simdilik gerek yok int update(List<List<IWritable>> dataList);
     }
 }

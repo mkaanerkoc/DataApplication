@@ -11,17 +11,16 @@ namespace DataApplication
 {
     public partial class Form1 : Form
     {
-        BaseDevice activeDevice;
         SessionManager sm;
         IViewUpdater vu;
         IPeripheralInterface sp;
         public Form1()
         {
             InitializeComponent();
-            ConfigurationManager cg = new ConfigurationManager();
+            var cg = new ConfigurationManager();
             cg.ParseConfigXML();
             sp = new PG250Mock();//new SerialPeripheral(9600, Parity.Even, StopBits.None, "COM2");
-            vu = new FormUpdater( mainContainer );
+            vu = new FormUpdater( panel1 );
             sm = new SessionManager();
             sm.OnTick += SessionManager_Tick;
             /*activeDevice = new PG250(sp, vu, null);
@@ -31,7 +30,7 @@ namespace DataApplication
 
         private void SessionManager_Tick(object sender, EventArgs e)
         {
-            OnTickEventArgs ee = (OnTickEventArgs)e;
+            var ee = (OnTickEventArgs)e;
             if( lastReadLbl.InvokeRequired)
             {
                 lastReadLbl.Invoke( new MethodInvoker(()=>
@@ -47,7 +46,7 @@ namespace DataApplication
 
         private void button1_Click(object sender, EventArgs e)
         {
-            activeDevice.ReadDataChannels();
+
         }
 
         private void button2_Click( object sender, EventArgs e)
@@ -58,23 +57,32 @@ namespace DataApplication
 
         private void yeniKayıtCtrlNToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            NewRecordDialog newRecDialog = new NewRecordDialog( ConfigurationManager.config );
-            DialogResult dialogResult = newRecDialog.ShowDialog();
+            var newRecDialog = new NewRecordDialog( ConfigurationManager.config );
+            var dialogResult = newRecDialog.ShowDialog();
             if( dialogResult == DialogResult.OK )
             {
-                // burasi onemli configler, creationlar v.s. burada yapılacak hep
-                BaseDevice dm = newRecDialog.GetActiveDevice();
-                ListBox lb = (ListBox)activeChannelsCbList;
-                lb.DataSource = newRecDialog.GetActiveChannels();
-                lb.DisplayMember = "name";
-                for (int i = 0; i < activeChannelsCbList.Items.Count; i++)
+                var dm = newRecDialog.GetActiveDevice();
+                if( dm != null )
                 {
-                    activeChannelsCbList.SetItemChecked(i, true);
+                    var lb = (ListBox)activeChannelsCbList;
+                    lb.DataSource = newRecDialog.GetActiveChannels();
+                    lb.DisplayMember = "name";
+                    for (int i = 0; i < activeChannelsCbList.Items.Count; i++)
+                    {
+                        activeChannelsCbList.SetItemChecked(i, true);
+                    }
+
+                    fileNameLbl.Text = newRecDialog.GetFileName();
+                    sm.SetFilename(newRecDialog.GetFileName());
+                    vu.initialize(newRecDialog.GetActiveChannels());
+                    activeDeviceNameLbl.Text = dm.GetModel().DisplayName;
+                    dm.Begin();
+                }
+                else
+                {
+
                 }
 
-                fileNameLbl.Text = newRecDialog.GetFileName();
-                sm.SetFilename( newRecDialog.GetFileName() );
-                vu.initialize( newRecDialog.GetActiveChannels() );
                 
             }
         }
@@ -84,11 +92,13 @@ namespace DataApplication
             if( sm.IsRunning() )
             {
                 button3.Text = "Başlat";
+                readPeriodTb.Enabled = true;
                 sm.StopTimer();
             }
             else
             {
                 button3.Text = "Bitir";
+                readPeriodTb.Enabled = false;
                 sm.SetReadPeriod(Convert.ToDouble(readPeriodTb.Text));
                 sm.StartTimer();
             }
@@ -101,6 +111,15 @@ namespace DataApplication
             if (dialogResult == DialogResult.OK)
             {
 
+            }
+        }
+
+        private void eskiKayıttanDevamEtToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                
             }
         }
     }
