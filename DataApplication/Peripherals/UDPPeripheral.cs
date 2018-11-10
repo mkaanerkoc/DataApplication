@@ -15,19 +15,19 @@ namespace DataApplication.Peripherals
         private Thread thdUDPServer;
         private int _portNum;
         private IErrorHandler _errorHandler;
-        private IPEndPoint _ipEndpoint;
+        private IPAddress _ipAddress;
 
-        public UDPPeripheral(int portNum, IPEndPoint ipAddr )
+        public UDPPeripheral(int portNum, IPAddress ipAddr )
         {
             _portNum = portNum;
             client = new UdpClient();
             _errorHandler = new ConsoleErrorHandler();
         }
 
-        public UDPPeripheral( int portNum, IPEndPoint ipAddr, IErrorHandler errHandler )
+        public UDPPeripheral( int portNum, IPAddress ipAddr, IErrorHandler errHandler )
         {
             _portNum = portNum;
-            _ipEndpoint = ipAddr;
+            _ipAddress = ipAddr;
             _errorHandler = errHandler;
             client = new UdpClient();
             _errorHandler = errHandler;
@@ -38,7 +38,7 @@ namespace DataApplication.Peripherals
         {
             try
             {
-                client.Connect(_ipEndpoint);
+                client.Connect(_ipAddress, _portNum );
                 thdUDPServer = new Thread(new ThreadStart(udpListenerThread));
                 thdUDPServer.Start();
                 return 1;
@@ -93,7 +93,7 @@ namespace DataApplication.Peripherals
         public int write(byte[] param)
         {
             UdpClient udpClient = new UdpClient(_portNum);
-            udpClient.Connect(_ipEndpoint);
+            udpClient.Connect(_ipAddress, _portNum);
             udpClient.Send(param, param.Length);
             udpClient.Close();
             return 1;

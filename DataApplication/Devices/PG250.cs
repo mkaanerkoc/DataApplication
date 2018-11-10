@@ -19,25 +19,27 @@ namespace DataApplication.Devices
 
         private static char PG250_SPLITTER_CHAR = ',';
 
-        public PG250( string portName )
+        public PG250( )
         {
-            _periphInterface = new SerialPeripheral( 9600, Parity.Even, StopBits.None, portName);
-            _writer = new CSVWriter("deneme.csv");
-            _errorHandler = new FileErrorHandler("pg250_logs.txt");
-            _periphInterface.open();
+
         }
         
-        public PG250(   string portName, 
-                        IPeripheralInterface interfaceParam, 
-                        IViewUpdater viewParam )
+        public PG250(   IPeripheralInterface interfaceParam, 
+                        IViewUpdater viewParam,
+                        IDataWriter dataWriter )
         {
             _periphInterface = interfaceParam;
-            //_writer = new CSVWriter(";");
-            _writer = new ExcelWriter();
-            _periphInterface.open();
+            _writer = dataWriter;
             _view = viewParam;
+            _periphInterface.open();
         }
-        
+
+        public override int Begin()
+        {
+            _periphInterface.open();
+            return 1;
+        }
+
         public override int ParseDeviceConfigFile()
         {
             Console.WriteLine("<PG250> ReadDeviceConfigFile \n");

@@ -12,6 +12,7 @@ namespace DataApplication.DataWriter
         StreamWriter _writer;
         StringBuilder _sb;
         string _seperator;
+        private string _fileName;
 
         public CSVWriter()
         {
@@ -19,10 +20,28 @@ namespace DataApplication.DataWriter
             _seperator = ";";
         }
 
-        public CSVWriter(string seperatorParam )
+        public CSVWriter(string fileNameParam)
+        {
+            _sb = new StringBuilder();
+            _fileName = fileNameParam;
+        }
+
+        public CSVWriter( string fileNameParam, string seperatorParam = ";")
         {
             _sb = new StringBuilder();
             _seperator = seperatorParam;
+            _fileName = fileNameParam;
+        }
+
+
+        public int create()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int create(string nameParam)
+        {
+            throw new NotImplementedException();
         }
 
         public int open( string nameParam)
@@ -35,6 +54,24 @@ namespace DataApplication.DataWriter
             if( _writer == null )
             {
                 return 0;
+            }
+            return 1;
+        }
+
+        public int open()
+        {
+            if( _fileName.Length < 3 )
+            {
+                return -1;
+            }
+            _writer = File.AppendText(_fileName);
+            if (_writer == null)
+            {
+                _writer = new StreamWriter(_fileName);
+            }
+            if (_writer == null)
+            {
+                return -1;
             }
             return 1;
         }

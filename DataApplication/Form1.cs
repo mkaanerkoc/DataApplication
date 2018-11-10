@@ -18,14 +18,15 @@ namespace DataApplication
         public Form1()
         {
             InitializeComponent();
-            sp = new PG250Mock();//new SerialPeripheral(9600, Parity.Even, StopBits.None, "COM2");
-            vu = new FormUpdater(mainContainer);
-            sm = new SessionManager();
-            sm.OnTick += SessionManager_Tick;
-            activeDevice = new PG250("COM1", sp, vu);
             ConfigurationManager cg = new ConfigurationManager();
             cg.ParseConfigXML();
-            sm.SetDevice(activeDevice);
+            sp = new PG250Mock();//new SerialPeripheral(9600, Parity.Even, StopBits.None, "COM2");
+            vu = new FormUpdater( mainContainer );
+            sm = new SessionManager();
+            sm.OnTick += SessionManager_Tick;
+            /*activeDevice = new PG250(sp, vu, null);
+           
+            sm.SetDevice(activeDevice);*/
         }
 
         private void SessionManager_Tick(object sender, EventArgs e)
@@ -62,7 +63,16 @@ namespace DataApplication
             if( dialogResult == DialogResult.OK )
             {
                 // burasi onemli configler, creationlar v.s. burada yapılacak hep
-                //BaseDevice dm = newRecDialog.GetActiveDevice();
+                BaseDevice dm = newRecDialog.GetActiveDevice();
+                ListBox lb = (ListBox)activeChannelsCbList;
+                lb.DataSource = newRecDialog.GetActiveChannels();
+                lb.DisplayMember = "name";
+                for (int i = 0; i < activeChannelsCbList.Items.Count; i++)
+                {
+                    activeChannelsCbList.SetItemChecked(i, true);
+                }
+
+                fileNameLbl.Text = newRecDialog.GetFileName();
                 sm.SetFilename( newRecDialog.GetFileName() );
                 vu.initialize( newRecDialog.GetActiveChannels() );
                 
@@ -81,6 +91,16 @@ namespace DataApplication
                 button3.Text = "Bitir";
                 sm.SetReadPeriod(Convert.ToDouble(readPeriodTb.Text));
                 sm.StartTimer();
+            }
+        }
+
+        private void kayıtAyarlarıToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ProgramParameters prgParamsPage = new ProgramParameters();
+            DialogResult dialogResult = prgParamsPage.ShowDialog();
+            if (dialogResult == DialogResult.OK)
+            {
+
             }
         }
     }

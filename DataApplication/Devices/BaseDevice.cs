@@ -17,6 +17,30 @@ namespace DataApplication.Devices
         protected IViewUpdater _view;
         protected IErrorHandler _errorHandler;
 
+        public int SetDataWriter( IDataWriter param )
+        {
+            _writer = param;
+            return 1;
+        }
+        public int SetViewUpdater( IViewUpdater param )
+        {
+            _view = param;
+            return 1;
+        }
+
+        public int SetPeripheralInterface (IPeripheralInterface param )
+        {
+            _periphInterface = param;
+            return 1;
+        }
+        
+        public int SetErrorHandler( IErrorHandler param )
+        {
+            _errorHandler = param;
+            return 1;
+        }
+
+        public abstract int Begin();
         public abstract int ParseDeviceConfigFile();
         public abstract int ReadDeviceInformation();
         public abstract int ReadDataChannels();

@@ -46,17 +46,22 @@ namespace DataApplication
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.kayıtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.yeniKayıtCtrlNToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.eskiKayıttanDevamEtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.kaydetCtrlNToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.farklıKaydetCtrlShiftSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cihazAyarlarıToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cihazAyarlarıToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.programAyarlarıToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.görünümToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.kayıtAyarlarıToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hakkındaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.activeChannelsCbList = new System.Windows.Forms.CheckedListBox();
-            this.eskiKayıttanDevamEtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.fileNameLbl = new System.Windows.Forms.Label();
+            this.lastSaveLbl = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -102,14 +107,18 @@ namespace DataApplication
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.lastSaveLbl);
+            this.groupBox1.Controls.Add(this.fileNameLbl);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.lastReadLbl);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.readPeriodTb);
             this.groupBox1.Controls.Add(this.button3);
-            this.groupBox1.Location = new System.Drawing.Point(12, 38);
+            this.groupBox1.Location = new System.Drawing.Point(12, 31);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(768, 84);
+            this.groupBox1.Size = new System.Drawing.Size(768, 91);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Session";
@@ -117,16 +126,16 @@ namespace DataApplication
             // lastReadLbl
             // 
             this.lastReadLbl.AutoSize = true;
-            this.lastReadLbl.Location = new System.Drawing.Point(439, 25);
+            this.lastReadLbl.Location = new System.Drawing.Point(439, 65);
             this.lastReadLbl.Name = "lastReadLbl";
-            this.lastReadLbl.Size = new System.Drawing.Size(18, 17);
+            this.lastReadLbl.Size = new System.Drawing.Size(23, 17);
             this.lastReadLbl.TabIndex = 4;
-            this.lastReadLbl.Text = "--";
+            this.lastReadLbl.Text = "---";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(343, 25);
+            this.label3.Location = new System.Drawing.Point(343, 65);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(90, 17);
             this.label3.TabIndex = 3;
@@ -189,6 +198,12 @@ namespace DataApplication
             this.yeniKayıtCtrlNToolStripMenuItem.Text = "Yeni Kayıt  Ctrl + N";
             this.yeniKayıtCtrlNToolStripMenuItem.Click += new System.EventHandler(this.yeniKayıtCtrlNToolStripMenuItem_Click);
             // 
+            // eskiKayıttanDevamEtToolStripMenuItem
+            // 
+            this.eskiKayıttanDevamEtToolStripMenuItem.Name = "eskiKayıttanDevamEtToolStripMenuItem";
+            this.eskiKayıttanDevamEtToolStripMenuItem.Size = new System.Drawing.Size(253, 26);
+            this.eskiKayıttanDevamEtToolStripMenuItem.Text = "Eski Kayıttan Devam Et";
+            // 
             // kaydetCtrlNToolStripMenuItem
             // 
             this.kaydetCtrlNToolStripMenuItem.Name = "kaydetCtrlNToolStripMenuItem";
@@ -205,7 +220,8 @@ namespace DataApplication
             // 
             this.cihazAyarlarıToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.cihazAyarlarıToolStripMenuItem1,
-            this.programAyarlarıToolStripMenuItem});
+            this.programAyarlarıToolStripMenuItem,
+            this.kayıtAyarlarıToolStripMenuItem});
             this.cihazAyarlarıToolStripMenuItem.Name = "cihazAyarlarıToolStripMenuItem";
             this.cihazAyarlarıToolStripMenuItem.Size = new System.Drawing.Size(68, 24);
             this.cihazAyarlarıToolStripMenuItem.Text = "Ayarlar";
@@ -230,6 +246,13 @@ namespace DataApplication
             this.görünümToolStripMenuItem.Size = new System.Drawing.Size(145, 26);
             this.görünümToolStripMenuItem.Text = "Görünüm";
             // 
+            // kayıtAyarlarıToolStripMenuItem
+            // 
+            this.kayıtAyarlarıToolStripMenuItem.Name = "kayıtAyarlarıToolStripMenuItem";
+            this.kayıtAyarlarıToolStripMenuItem.Size = new System.Drawing.Size(196, 26);
+            this.kayıtAyarlarıToolStripMenuItem.Text = "Kayıt Ayarları";
+            this.kayıtAyarlarıToolStripMenuItem.Click += new System.EventHandler(this.kayıtAyarlarıToolStripMenuItem_Click);
+            // 
             // hakkındaToolStripMenuItem
             // 
             this.hakkındaToolStripMenuItem.Name = "hakkındaToolStripMenuItem";
@@ -238,9 +261,9 @@ namespace DataApplication
             // 
             // groupBox2
             // 
-            this.groupBox2.Location = new System.Drawing.Point(787, 38);
+            this.groupBox2.Location = new System.Drawing.Point(787, 31);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(276, 84);
+            this.groupBox2.Size = new System.Drawing.Size(276, 91);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Cihaz";
@@ -263,11 +286,41 @@ namespace DataApplication
             this.activeChannelsCbList.Size = new System.Drawing.Size(264, 361);
             this.activeChannelsCbList.TabIndex = 0;
             // 
-            // eskiKayıttanDevamEtToolStripMenuItem
+            // label4
             // 
-            this.eskiKayıttanDevamEtToolStripMenuItem.Name = "eskiKayıttanDevamEtToolStripMenuItem";
-            this.eskiKayıttanDevamEtToolStripMenuItem.Size = new System.Drawing.Size(253, 26);
-            this.eskiKayıttanDevamEtToolStripMenuItem.Text = "Eski Kayıttan Devam Et";
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(342, 18);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(80, 17);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "Dosya Adı :";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(343, 42);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(108, 17);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "Son Kaydetme :";
+            // 
+            // fileNameLbl
+            // 
+            this.fileNameLbl.AutoSize = true;
+            this.fileNameLbl.Location = new System.Drawing.Point(428, 18);
+            this.fileNameLbl.Name = "fileNameLbl";
+            this.fileNameLbl.Size = new System.Drawing.Size(23, 17);
+            this.fileNameLbl.TabIndex = 7;
+            this.fileNameLbl.Text = "---";
+            // 
+            // lastSaveLbl
+            // 
+            this.lastSaveLbl.AutoSize = true;
+            this.lastSaveLbl.Location = new System.Drawing.Point(458, 42);
+            this.lastSaveLbl.Name = "lastSaveLbl";
+            this.lastSaveLbl.Size = new System.Drawing.Size(23, 17);
+            this.lastSaveLbl.TabIndex = 8;
+            this.lastSaveLbl.Text = "---";
             // 
             // Form1
             // 
@@ -321,6 +374,11 @@ namespace DataApplication
         private GroupBox groupBox3;
         private CheckedListBox activeChannelsCbList;
         private ToolStripMenuItem eskiKayıttanDevamEtToolStripMenuItem;
+        private ToolStripMenuItem kayıtAyarlarıToolStripMenuItem;
+        private Label label5;
+        private Label label4;
+        private Label fileNameLbl;
+        private Label lastSaveLbl;
     }
 }
 

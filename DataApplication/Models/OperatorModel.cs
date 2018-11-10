@@ -25,6 +25,14 @@ namespace DataApplication.Models
                 return Name + " " + Surname;
             }
         }
+        [XmlIgnore]
+        public string DisplayName
+        {
+            get
+            {
+                return Name + " " + Surname + " - "+ID.ToString();
+            }
+        }
         [XmlElement]
         public string Email { get; set; }
         [XmlElement]

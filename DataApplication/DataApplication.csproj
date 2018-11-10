@@ -64,7 +64,6 @@
     <Compile Include="ApplicationManager\SessionFactory.cs" />
     <Compile Include="ApplicationManager\SessionManager.cs" />
     <Compile Include="DataWriter\CSVWriter.cs" />
-    <Compile Include="DataWriter\CSV_Writer.cs" />
     <Compile Include="DataWriter\ExcelWriter.cs" />
     <Compile Include="DataWriter\IDataWriter.cs" />
     <Compile Include="DataWriter\IHeaderWriter.cs" />
@@ -74,6 +73,36 @@
     <Compile Include="DataWriter\SQLWriter.cs" />
     <Compile Include="DataWriter\Writable.cs" />
     <Compile Include="Devices\BaseDevice.cs" />
+    <Compile Include="Dialogs\AddNewFacilityDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\AddNewFacilityDialog.Designer.cs">
+      <DependentUpon>AddNewFacilityDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\AddNewMeasurementPointDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\AddNewMeasurementPointDialog.Designer.cs">
+      <DependentUpon>AddNewMeasurementPointDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\AddNewUserDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\AddNewUserDialog.Designer.cs">
+      <DependentUpon>AddNewUserDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ProgramParameters.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\ProgramParameters.Designer.cs">
+      <DependentUpon>ProgramParameters.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Factories\DataWriterFactory.cs" />
+    <Compile Include="Factories\DeviceFactory.cs" />
+    <Compile Include="Factories\PeripheralFactory.cs" />
+    <Compile Include="Models\DataStorageConfigModel.cs" />
+    <Compile Include="Models\DeviceConfigModel.cs" />
+    <Compile Include="Models\MeasurementPointModel.cs" />
     <Compile Include="StaticInformations\DeviceInformations.cs" />
     <Compile Include="StaticInformations\PG250Information.cs" />
     <Compile Include="StaticInformations\PG300Information.cs" />
@@ -104,6 +133,9 @@
     <Compile Include="Peripherals\UDPPeripheral.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StaticInformations\SerialDeviceConfigurationTypes.cs" />
+    <Compile Include="StaticInformations\StorageInformations.cs" />
+    <Compile Include="Views\IDeviceConfigControl.cs" />
     <Compile Include="Views\DataWindow.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -111,9 +143,39 @@
       <DependentUpon>DataWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\FormUpdater.cs" />
+    <Compile Include="Views\TCPDeviceConfig.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\TCPDeviceConfig.Designer.cs">
+      <DependentUpon>TCPDeviceConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UDPDeviceConfig.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\UDPDeviceConfig.Designer.cs">
+      <DependentUpon>UDPDeviceConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\IViewUpdater.cs" />
+    <Compile Include="Views\SerialDeviceConfig.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\SerialDeviceConfig.Designer.cs">
+      <DependentUpon>SerialDeviceConfig.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Dialogs\AddNewFacilityDialog.resx">
+      <DependentUpon>AddNewFacilityDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\AddNewMeasurementPointDialog.resx">
+      <DependentUpon>AddNewMeasurementPointDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\AddNewUserDialog.resx">
+      <DependentUpon>AddNewUserDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\NewRecordDialog.resx">
       <DependentUpon>NewRecordDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\ProgramParameters.resx">
+      <DependentUpon>ProgramParameters.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -129,6 +191,15 @@
     </Compile>
     <EmbeddedResource Include="Views\DataWindow.resx">
       <DependentUpon>DataWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\TCPDeviceConfig.resx">
+      <DependentUpon>TCPDeviceConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\UDPDeviceConfig.resx">
+      <DependentUpon>UDPDeviceConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SerialDeviceConfig.resx">
+      <DependentUpon>SerialDeviceConfig.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

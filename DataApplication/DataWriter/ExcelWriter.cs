@@ -16,22 +16,109 @@ namespace DataApplication.DataWriter
         private WorksheetPart _workSheet;
         private OpenXmlReader _reader;
         private OpenXmlWriter _writer;
-    
+        private string _fileName;
 
-        public int open( string nameParam)
+
+        public ExcelWriter()
+        {
+
+        }
+
+        public ExcelWriter(string fileNameParam)
+        {
+            _fileName = fileNameParam;
+        }
+
+
+        public int create()
+        {
+            if (_fileName.Length < 3)
+            {
+                return -1;
+            }
+
+            // Create a spreadsheet document by supplying the filepath.
+            // By default, AutoSave = true, Editable = true, and Type = xlsx.
+            var spreadsheetDocument = SpreadsheetDocument.Create(_fileName, SpreadsheetDocumentType.Workbook);
+
+            // Add a WorkbookPart to the document.
+            var workbookpart = spreadsheetDocument.AddWorkbookPart();
+            workbookpart.Workbook = new Workbook();
+
+            // Add a WorksheetPart to the WorkbookPart.
+            var worksheetPart = workbookpart.AddNewPart<WorksheetPart>();
+            worksheetPart.Worksheet = new Worksheet(new SheetData());
+
+            // Add Sheets to the Workbook.
+            var sheets = spreadsheetDocument.WorkbookPart.Workbook.AppendChild<Sheets>(new Sheets());
+
+            // Append a new worksheet and associate it with the workbook.
+            var sheet = new Sheet()
+            {
+                Id = spreadsheetDocument.WorkbookPart.
+                GetIdOfPart(worksheetPart),
+                SheetId = 1,
+                Name = "Sheet1"
+            };
+            sheets.Append(sheet);
+
+            workbookpart.Workbook.Save();
+
+            // Close the document.
+            spreadsheetDocument.Close();
+            return 1;
+        }
+
+        public int create(string nameParam)
+        {
+            return 1;
+        }
+
+        public int open()
+        {
+            int retvalueTemp = 0;
+            if (_fileName.Length < 3)
+            {
+                return -1;
+            }
+            try
+            {
+                _doc = SpreadsheetDocument.Open(_fileName, true);
+            }
+            catch (Exception ee)
+            {
+                Console.WriteLine("<ExcelWriter>" + ee.Message);
+                return -1;
+            }
+
+            if (_doc != null)
+            {
+                _workBook = _doc.WorkbookPart;
+                _workSheet = _workBook.WorksheetParts.First();
+                _reader = OpenXmlReader.Create(_workSheet);
+                retvalueTemp = 1;
+            }
+            else
+            {
+                retvalueTemp = -1;
+            }
+            return retvalueTemp;
+
+        }
+        public int open(string nameParam)
         {
             int retvalueTemp = 0;
             try
             {
                 _doc = SpreadsheetDocument.Open(nameParam, true);
             }
-            catch(Exception ee)
+            catch (Exception ee)
             {
-                Console.WriteLine("<ExcelWriter>" +  ee.Message);
+                Console.WriteLine("<ExcelWriter>" + ee.Message);
                 return -1;
             }
-            
-            if(_doc != null )
+
+            if (_doc != null)
             {
                 _workBook = _doc.WorkbookPart;
                 _workSheet = _workBook.WorksheetParts.First();
@@ -54,11 +141,11 @@ namespace DataApplication.DataWriter
             _doc = null;
             return 1;
         }
-        
+
         public int write(List<IWritable> dataList)
         {
             int retvalueTemp = 0;
-            if( _doc != null && _workBook != null && _workSheet != null )
+            if (_doc != null && _workBook != null && _workSheet != null)
             {
                 string originalPartId = _workBook.GetIdOfPart(_workSheet);
 
@@ -67,26 +154,26 @@ namespace DataApplication.DataWriter
 
                 _reader = OpenXmlReader.Create(_workSheet);
                 _writer = OpenXmlWriter.Create(replacementPart);
-                
-                while( _reader.Read() )
+
+                while (_reader.Read())
                 {
-                    if(_reader.ElementType == typeof(Selection))
+                    if (_reader.ElementType == typeof(Selection))
                     {
                         continue;
                     }
-                    if( _reader.ElementType == typeof(SheetData))
+                    if (_reader.ElementType == typeof(SheetData))
                     {
-                        if( _reader.IsStartElement )
+                        if (_reader.IsStartElement)
                         {
                             _writer.WriteStartElement(_reader);
                             continue;
                         }
-                       
+
                         // append section begins 
                         //_writer.WriteStartElement(new SheetData()); // beginning of sheetdata
                         Row row = new Row();
                         _writer.WriteStartElement(row); // begining of row 
-                        for(int col = 0; col < dataList.Count; col++ )
+                        for (int col = 0; col < dataList.Count; col++)
                         {
                             Cell cell = new Cell();
                             cell.CellValue = new CellValue(dataList[col].ToString());
@@ -98,7 +185,7 @@ namespace DataApplication.DataWriter
                     }
                     else
                     {
-                        if(_reader.IsStartElement)
+                        if (_reader.IsStartElement)
                         {
                             _writer.WriteStartElement(_reader);
                             if (_reader.ElementType == typeof(CellValue))
@@ -106,13 +193,13 @@ namespace DataApplication.DataWriter
                                 _writer.WriteString(_reader.GetText());
                             }
                         }
-                        else if(_reader.IsEndElement)
+                        else if (_reader.IsEndElement)
                         {
                             _writer.WriteEndElement();
                         }
                         else
                         {
-                            
+
                         }
                     }
                 }
@@ -166,7 +253,6 @@ namespace DataApplication.DataWriter
 
                     }
                 }
-
             }
             else
             {
@@ -175,5 +261,4 @@ namespace DataApplication.DataWriter
             return retvalueTemp;
         }
     }
-
 }

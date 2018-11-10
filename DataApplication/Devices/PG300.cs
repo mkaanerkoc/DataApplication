@@ -25,20 +25,25 @@ namespace DataApplication.Devices
 
       
 
-        public PG300(string portName)
+        public PG300()
         {
-            _periphInterface = new UDPPeripheral(50, new IPEndPoint(4000,50));
-            _periphInterface.open();
+
         }
 
-        public PG300(   string portName, 
-                        IPeripheralInterface interfaceParam,
+        public PG300(   IPeripheralInterface interfaceParam,
+                        IDataWriter dataWriter,
                         IViewUpdater viewParam )
         {
             _periphInterface = interfaceParam;
-            _writer = new CSVWriter(";");
+            _writer = dataWriter;
             _view = viewParam;
             _periphInterface.open();
+        }
+
+        public override int Begin()
+        {
+            _periphInterface.open();
+            return 1;
         }
 
         public override int GetDiagnostics()
@@ -153,5 +158,7 @@ namespace DataApplication.Devices
                 return false;
             }
         }
+
+
     }
 }

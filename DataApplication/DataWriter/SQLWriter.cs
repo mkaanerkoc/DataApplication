@@ -8,6 +8,22 @@ namespace DataApplication.DataWriter
 {
     public class SQLWriter : IDataWriter
     {
+
+        public int create()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int create(string nameParam)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int open()
+        {
+            throw new NotImplementedException();
+        }
+
         public int open( string nameParam)
         {
             throw new NotImplementedException();
