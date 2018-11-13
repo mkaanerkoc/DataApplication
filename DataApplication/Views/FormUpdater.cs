@@ -30,7 +30,9 @@ namespace DataApplication.View
             {
                 dtList.Add(new DataWindow(channelList[k].name, channelList[k].unit));
             }
+
             int viewInRow = container.Size.Width / dt.Size.Width;
+
             for (int k = 0; k < dtList.Count; k++)
             {
                 var i = dtList[k];
@@ -71,14 +73,49 @@ namespace DataApplication.View
             throw new NotImplementedException();
         }
 
-        public int addChannel(ChannelModel newChannel)
+        public int addChannel( ChannelModel newChannel)
         {
-            throw new NotImplementedException();
+            int retvalue = 0;
+            DataWindow dt = new DataWindow(newChannel.name, newChannel.unit);
+            int viewInRow = container.Size.Width / dt.Size.Width;
+
+            dtList.Add( dt );
+            int k = dtList.Count - 1;
+            int yPos = (k / viewInRow) * dt.Size.Height;
+            int xPos = (k % viewInRow) * dt.Size.Width;
+            dt.Location = new Point(10 + xPos, 15 + yPos);
+
+            container.Controls.Add( dt );
+            return retvalue;
         }
 
         public int removeChannel(ChannelModel oldChannel)
         {
-            throw new NotImplementedException();
+            int retval = 0;
+            var res = dtList.Where(x => x.Alias.Equals(oldChannel.name)).FirstOrDefault();
+            if (res != null)
+            {
+                container.Controls.Clear();
+                dtList.Remove(res);
+
+                DataWindow dt = new DataWindow();
+                int viewInRow = container.Size.Width / dt.Size.Width;
+
+                for (int k = 0; k < dtList.Count; k++)
+                {
+                    var i = dtList[k];
+                    int yPos = (k / viewInRow) * i.Size.Height;
+                    int xPos = (k % viewInRow) * i.Size.Width;
+                    i.Location = new Point(10 + xPos, 15 + yPos);
+                    container.Controls.Add(i);
+                }
+
+            }
+            else
+            {
+                retval = -1;
+            }
+            return retval;
         }
     }
 }

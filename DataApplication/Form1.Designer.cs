@@ -60,9 +60,9 @@ namespace DataApplication
             this.kayıtAyarlarıToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hakkındaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.activeDeviceNameLbl = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.activeChannelsCbList = new System.Windows.Forms.CheckedListBox();
-            this.activeDeviceNameLbl = new System.Windows.Forms.Label();
             this.mainContainer.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -310,6 +310,15 @@ namespace DataApplication
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Cihaz";
             // 
+            // activeDeviceNameLbl
+            // 
+            this.activeDeviceNameLbl.AutoSize = true;
+            this.activeDeviceNameLbl.Location = new System.Drawing.Point(24, 25);
+            this.activeDeviceNameLbl.Name = "activeDeviceNameLbl";
+            this.activeDeviceNameLbl.Size = new System.Drawing.Size(18, 17);
+            this.activeDeviceNameLbl.TabIndex = 0;
+            this.activeDeviceNameLbl.Text = "--";
+            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.activeChannelsCbList);
@@ -327,15 +336,7 @@ namespace DataApplication
             this.activeChannelsCbList.Name = "activeChannelsCbList";
             this.activeChannelsCbList.Size = new System.Drawing.Size(264, 361);
             this.activeChannelsCbList.TabIndex = 0;
-            // 
-            // activeDeviceNameLbl
-            // 
-            this.activeDeviceNameLbl.AutoSize = true;
-            this.activeDeviceNameLbl.Location = new System.Drawing.Point(24, 25);
-            this.activeDeviceNameLbl.Name = "activeDeviceNameLbl";
-            this.activeDeviceNameLbl.Size = new System.Drawing.Size(18, 17);
-            this.activeDeviceNameLbl.TabIndex = 0;
-            this.activeDeviceNameLbl.Text = "--";
+            this.activeChannelsCbList.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.activeChannelsCbList_ItemCheck);
             // 
             // Form1
             // 

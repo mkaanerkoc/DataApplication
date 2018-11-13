@@ -5,6 +5,7 @@ using DataApplication.Peripherals;
 using DataApplication.Peripherals.MockDevices;
 using DataApplication.View;
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace DataApplication
@@ -73,9 +74,10 @@ namespace DataApplication
                     }
 
                     fileNameLbl.Text = newRecDialog.GetFileName();
-                    sm.SetFilename(newRecDialog.GetFileName());
-                    vu.initialize(newRecDialog.GetActiveChannels());
+                    sm.SetFilename( newRecDialog.GetFileName() );
+                    vu.initialize( newRecDialog.GetActiveChannels() );
                     activeDeviceNameLbl.Text = dm.GetModel().DisplayName;
+                    dm.SetViewUpdater(vu);
                     dm.Begin();
                 }
                 else
@@ -121,6 +123,31 @@ namespace DataApplication
             {
                 
             }
+        }
+
+        private void activeChannelsCbList_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            /*You can use the ItemCheck event, if you also check the new state of the item
+             *  which is being clicked. This is available in the event args, as e.NewValue. 
+             *  If NewValue is checked, include the current item along with the collection proper in your logic:
+             */
+            List<string> checkedItems = new List<string>();
+            foreach (var item in activeChannelsCbList.CheckedItems)
+                checkedItems.Add(item.ToString());
+
+            if (e.NewValue == CheckState.Checked)
+            {
+                //checkedItems.Add(activeChannelsCbList.Items[e.Index].ToString());
+                vu.addChannel((ChannelModel)activeChannelsCbList.Items[e.Index]);
+            }
+            else
+            {
+                vu.removeChannel((ChannelModel)activeChannelsCbList.Items[e.Index]);
+            }
+                //checkedItems.Remove(activeChannelsCbList.Items[e.Index].ToString());
+            
+
+
         }
     }
 }
