@@ -15,7 +15,7 @@ namespace DataApplication.DataWriter
         int open();
         int open(string nameParam);
         int close();
-        int writerHeader(List<ChannelModel> channels, OperatorModel operatorParam, FacilityModel facilityParam);
+        int writeHeader(List<ChannelModel> channels, OperatorModel operatorParam, FacilityModel facilityParam);
         int write(List<IWritable> dataList );
         int write(List<List<IWritable>> dataList);
     }

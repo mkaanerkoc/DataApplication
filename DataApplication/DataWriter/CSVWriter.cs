@@ -129,9 +129,9 @@ namespace DataApplication.DataWriter
             return 1;
         }
 
-        public int writerHeader(List<ChannelModel> channels, OperatorModel operatorParam, FacilityModel facilityParam)
+        public int writeHeader(List<ChannelModel> channels, OperatorModel operatorParam, FacilityModel facilityParam)
         {
-            return 1;
+            return 1; 
         }
     }
 }

@@ -137,7 +137,7 @@ namespace DataApplication.DataWriter
                 return -1;
             }
 
-            if (_doc != null)
+            if ( _doc != null)
             {
                 _workBook = _doc.WorkbookPart;
                 _workSheet = _workBook.WorksheetParts.First();
@@ -345,9 +345,117 @@ namespace DataApplication.DataWriter
             return retvalueTemp;
         }
 
-        public int writerHeader(List<ChannelModel> channels, OperatorModel operatorParam, FacilityModel facilityParam)
+        public int writeHeader(List<ChannelModel> channels, OperatorModel operatorParam, FacilityModel facilityParam)
         {
-            throw new NotImplementedException();
+            int retvalueTemp = 0;
+            if (_doc != null && _workBook != null && _workSheet != null)
+            {
+                string originalPartId = _workBook.GetIdOfPart(_workSheet);
+
+                WorksheetPart replacementPart = _workBook.AddNewPart<WorksheetPart>();
+                string replacementPartId = _workBook.GetIdOfPart(replacementPart);
+
+                _reader = OpenXmlReader.Create(_workSheet);
+                _writer = OpenXmlWriter.Create(replacementPart);
+
+                while (_reader.Read())
+                {
+                    if (_reader.ElementType == typeof(Selection))
+                    {
+                        continue;
+                    }
+                    if (_reader.ElementType == typeof(SheetData))
+                    {
+                        if (_reader.IsEndElement)
+                        {
+                            continue;
+                        }
+
+                        _writer.WriteStartElement(new SheetData()); // beginning of sheetdata
+                        // append section begins
+                        var labelRow = new Row(); // label row 
+                        labelRow.RowIndex = 1;
+
+                        _writer.WriteStartElement( labelRow); // begining of row 
+                        var operatorLabelCell = new Cell();
+                        var facilityLabelCell = new Cell();
+                        var creationDateLabelCell = new Cell();
+
+                        operatorLabelCell.CellValue = new CellValue(" Operatör ");
+                        facilityLabelCell.CellValue = new CellValue(" Tesis ");
+                        creationDateLabelCell.CellValue = new CellValue(" Oluşturulma Tarihi ");
+                        
+                        _writer.WriteElement( operatorLabelCell );
+                        _writer.WriteElement( facilityLabelCell );
+                        _writer.WriteElement( creationDateLabelCell );
+
+                        _writer.WriteEndElement(); // end of label row
+
+                        var infoRow = new Row(); // info row  
+                        infoRow.RowIndex = 2;
+                        _writer.WriteStartElement(infoRow); // begining of row 
+
+                        var operatorInfoCell = new Cell();
+                        var facilityInfoCell = new Cell();
+                        var creationDateInfoCell = new Cell();
+
+                        operatorInfoCell.CellValue = new CellValue( operatorParam.DisplayName );
+                        facilityInfoCell.CellValue = new CellValue( facilityParam.ListDisplay );
+                        creationDateInfoCell.CellValue = new CellValue( DateTime.Now.ToShortTimeString());
+                        
+                        _writer.WriteElement(operatorInfoCell);
+                        _writer.WriteElement(facilityInfoCell);
+                        _writer.WriteElement(creationDateInfoCell);
+
+                        _writer.WriteEndElement(); // end of info row
+
+                        var channelListRow = new Row(); // channelListRow row
+                        channelListRow.RowIndex = 3;
+                        _writer.WriteStartElement(channelListRow); // begining of row 
+                        for ( int k = 0; k < channels.Count; k++ )
+                        {
+                            var dataInfoCell = new Cell();
+                            dataInfoCell.CellValue = new CellValue(channels[k].name);
+                            _writer.WriteElement(dataInfoCell);
+                        }
+                        _writer.WriteEndElement(); // end of channel info  row
+
+                        _writer.WriteEndElement(); // end of sheetdata
+                    }
+                    else
+                    {
+                        if (_reader.IsStartElement)
+                        {
+                            _writer.WriteStartElement(_reader);
+                            if (_reader.ElementType == typeof(CellValue))
+                            {
+                                _writer.WriteString(_reader.GetText());
+                            }
+                        }
+                        else if (_reader.IsEndElement)
+                        {
+                            _writer.WriteEndElement();
+                        }
+                        else
+                        {
+
+                        }
+                    }
+                }
+
+                _writer.Close();
+                _reader.Close();
+
+                Sheet sheet = _workBook.Workbook.Descendants<Sheet>().Where(s => s.Id.Value.Equals(originalPartId)).First();
+                sheet.Id.Value = replacementPartId;
+                _workBook.DeletePart(_workSheet);
+
+            }
+            else
+            {
+                retvalueTemp = -1;
+            }
+            return retvalueTemp;
         }
     }
 }

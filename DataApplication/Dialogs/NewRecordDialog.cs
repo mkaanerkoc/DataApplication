@@ -104,22 +104,30 @@ namespace DataApplication.Dialogs
 
         private void saveBtn_Click(object sender, EventArgs e)
         {
-            var selectedDevice = ((DeviceModel)(allDevicesCb.SelectedItem));
+            var selectedDevice = (DeviceModel)(allDevicesCb.SelectedItem);
             var storageModel = (DataStorageConfigModel)fileTypeSelectionCb.SelectedItem;
+            var operatorModel = (OperatorModel)operatorsCb.SelectedItem;
+            var facilityModel = (FacilityModel)facilitiesCb.SelectedItem;
+            var activeChannels = GetActiveChannels();
             var configBox = (IDeviceConfigControl)deviceSettingsContainer.Controls[0];
             var devConfig = configBox.GetDeviceConfig();
             if( devConfig != null && selectedDevice != null && storageModel != null)
             {
                 this.DialogResult = DialogResult.OK;
                 currentDevice = DeviceFactory.CreateDevice(selectedDevice);
-                var peripheralInterface = PeripheralFactory.CreatePeripheral(devConfig);
+                var devInterface = PeripheralFactory.CreatePeripheral(devConfig);
                 var dataWriter = DataWriterFactory.CreateDataWriter(fileNameTb.Text, storageModel.Type);
                 var errorHandler = new FileErrorHandler("application_errors.txt");
 
-                currentDevice.SetDataWriter(dataWriter);
-                currentDevice.SetPeripheralInterface(peripheralInterface);
-                currentDevice.SetErrorHandler(errorHandler);
+                dataWriter.create();
+                dataWriter.open();
+                dataWriter.writeHeader( activeChannels, operatorModel, facilityModel );
+                dataWriter.close();
 
+                currentDevice.SetDataWriter(dataWriter);
+                currentDevice.SetPeripheralInterface(devInterface);
+                currentDevice.SetErrorHandler(errorHandler);
+                
                 this.Close();
             }
         }

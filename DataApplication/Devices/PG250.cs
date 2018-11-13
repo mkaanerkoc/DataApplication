@@ -32,12 +32,12 @@ namespace DataApplication.Devices
             _writer = dataWriter;
             _view = viewParam;
             _periphInterface.open();
+
         }
 
         public override int Begin()
         {
             _periphInterface.open();
-            _writer.create(); // creates file if it needs to be created
             return 1;
         }
 

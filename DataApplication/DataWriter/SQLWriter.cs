@@ -46,7 +46,7 @@ namespace DataApplication.DataWriter
             throw new NotImplementedException();
         }
 
-        public int writerHeader(List<ChannelModel> channels, OperatorModel operatorParam, FacilityModel facilityParam)
+        public int writeHeader(List<ChannelModel> channels, OperatorModel operatorParam, FacilityModel facilityParam)
         {
             throw new NotImplementedException();
         }
